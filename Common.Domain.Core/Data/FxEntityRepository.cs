@@ -10,34 +10,34 @@ using System.Threading.Tasks;
 
 namespace Common.Domain.Core.Data
 {
-    public abstract class FxEntityRepository<TEntityType, TContextType> : IFxEntityRepository<TEntityType>
-       where TEntityType : FxEntity
-       where TContextType : FxDbContext
+    public abstract class FxEntityRepository<TEntity, TContext> : IFxEntityRepository<TEntity>
+       where TEntity : FxEntity
+       where TContext : FxDbContext
     {
-        protected readonly TContextType _context;
+        protected readonly TContext _context;
 
-        public FxEntityRepository(TContextType context)
+        public FxEntityRepository(TContext context)
         {
             _context = context;
         }
 
-        public virtual async Task<int> Add(TEntityType entity)
+        public virtual async Task<int> Add(TEntity entity)
         {
             await _context.AddAsync(entity);
             return entity.Id;
         }
 
-        public virtual async Task<List<TEntityType>> Enumerate(bool includeDeleted)
+        public virtual async Task<List<TEntity>> Enumerate(bool includeDeleted)
         {
-            var models = await _context.Set<TEntityType>().ToListAsync();
+            var models = await _context.Set<TEntity>().ToListAsync();
             var foundModels = models.FindAll(x => (includeDeleted || !x.DeleteFlag)).ToList();
             return foundModels;
         }
 
-        public virtual async Task<TEntityType?> Get(int id)
-            => await _context.Set<TEntityType>().FindAsync(id);
+        public virtual async Task<TEntity?> Get(int id)
+            => await _context.Set<TEntity>().FindAsync(id);
 
-        public virtual async Task<bool> Update(TEntityType entity)
+        public virtual async Task<bool> Update(TEntity entity)
         {
             var m = await this.Get(entity.Id);
             if (m == default)
@@ -57,7 +57,7 @@ namespace Common.Domain.Core.Data
             return await this.Update(model.Tap(x => x.DeleteFlag = true));
         }
 
-        public virtual async Task<bool> Delete(TEntityType entity)
+        public virtual async Task<bool> Delete(TEntity entity)
         {
             if (entity == default)
                 return false;

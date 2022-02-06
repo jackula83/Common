@@ -6,7 +6,7 @@ namespace Common.Domain.Core.Data
 {
     public abstract class FxDbContext : DbContext
     {
-        protected abstract void Setup<TEntityType>(ModelBuilder builder) where TEntityType : FxEntity;
+        protected abstract void Setup<TEntity>(ModelBuilder builder) where TEntity : FxEntity;
 
         public FxDbContext(DbContextOptions options) : base(options) { }
 

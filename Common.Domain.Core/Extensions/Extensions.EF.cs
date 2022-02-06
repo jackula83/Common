@@ -6,10 +6,10 @@ namespace Common.Domain.Core.Extensions
 {
     public static partial class Extensions
     {
-        public static void DetachLocal<TEntityType>(this FxDbContext context, TEntityType model, int modelId)
-           where TEntityType : FxEntity
+        public static void DetachLocal<TEntity>(this FxDbContext context, TEntity model, int modelId)
+           where TEntity : FxEntity
         {
-            var localModel = context.Set<TEntityType>()
+            var localModel = context.Set<TEntity>()
                .Local
                .FirstOrDefault(x => x.Id == modelId);
 

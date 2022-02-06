@@ -11,14 +11,14 @@ namespace Common.Domain.Core.Interfaces
     {
     }
 
-    public interface IFxEntityRepository<TEntityType> : IFxEntityRepository
-        where TEntityType : FxEntity
+    public interface IFxEntityRepository<TEntity> : IFxEntityRepository
+        where TEntity : FxEntity
     {
-        Task<int> Add(TEntityType entity);
-        Task<List<TEntityType>> Enumerate(bool includeDeleted);
-        Task<TEntityType?> Get(int id);
-        Task<bool> Update(TEntityType entity);
+        Task<int> Add(TEntity entity);
+        Task<List<TEntity>> Enumerate(bool includeDeleted);
+        Task<TEntity?> Get(int id);
+        Task<bool> Update(TEntity entity);
         Task<bool> Delete(int id);
-        Task<bool> Delete(TEntityType entity);
+        Task<bool> Delete(TEntity entity);
     }
 }
