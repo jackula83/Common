@@ -1,12 +1,12 @@
 ﻿using Common.Domain.Core.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
+using System.Reflection;
 
 namespace Common.Domain.Core.Data
 {
     public abstract class FxDbContext : DbContext
     {
-        protected abstract void Setup<TEntityType>(ModelBuilder builder) where TEntityType : FxEntity;
+        protected abstract void Setup<TEntity>(ModelBuilder builder) where TEntity : FxEntity;
 
         public FxDbContext(DbContextOptions options) : base(options) { }
 
@@ -17,16 +17,16 @@ namespace Common.Domain.Core.Data
             var propertyTypes = this.GetType().GetProperties()
                .Select(p => p.PropertyType);
 
-            var modelTypes = propertyTypes
-               ?.Where(x => x.GetGenericTypeDefinition() == typeof(DbSet<>))
+            var entityTypes = propertyTypes
+               ?.Where(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(DbSet<>))
                ?.Select(p => p.GetGenericArguments().FirstOrDefault());
 
-            foreach (var modelType in modelTypes ?? Enumerable.Empty<Type>())
+            foreach (var entityType in entityTypes ?? Enumerable.Empty<Type>())
             {
                 var setupMethod = this.GetType()
-                    !.GetMethod(nameof(Setup))
-                    !.MakeGenericMethod(this.GetType())
-                    !.Invoke(modelType, new object[] { modelBuilder });
+                    !.GetMethod(nameof(Setup), BindingFlags.Instance | BindingFlags.NonPublic)
+                    !.MakeGenericMethod(new Type[] { entityType! })
+                    !.Invoke(this, new object[] { modelBuilder });
             }
         }
     }
