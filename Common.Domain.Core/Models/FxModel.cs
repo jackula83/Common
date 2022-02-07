@@ -1,5 +1,4 @@
-﻿
-namespace Common.Domain.Core.Models
+﻿namespace Common.Domain.Core.Models
 {
     public abstract class FxModel
     {

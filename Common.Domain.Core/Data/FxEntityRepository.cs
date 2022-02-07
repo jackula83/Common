@@ -2,17 +2,12 @@
 using Common.Domain.Core.Interfaces;
 using Common.Domain.Core.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Common.Domain.Core.Data
 {
-    public abstract class FxEntityRepository<TEntity, TContext> : IFxEntityRepository<TEntity>
-       where TEntity : FxEntity
+    public abstract class FxEntityRepository<TContext, TEntity> : IFxEntityRepository<TEntity>
        where TContext : FxDbContext
+       where TEntity : FxEntity
     {
         protected readonly TContext _context;
 
