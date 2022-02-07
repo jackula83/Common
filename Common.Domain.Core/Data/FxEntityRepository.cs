@@ -22,7 +22,7 @@ namespace Common.Domain.Core.Data
             return entity.Id;
         }
 
-        public virtual async Task<List<TEntity>> Enumerate(bool includeDeleted)
+        public virtual async Task<List<TEntity>> Enumerate(bool includeDeleted = false)
         {
             var models = await _context.Set<TEntity>().ToListAsync();
             var foundModels = models.FindAll(x => (includeDeleted || !x.DeleteFlag)).ToList();
