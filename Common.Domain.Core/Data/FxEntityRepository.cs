@@ -18,10 +18,11 @@ namespace Common.Domain.Core.Data
 
         public virtual async Task<int> Add(TEntity entity)
         {
-            await _context.AddAsync(entity
+            var copy = entity.Copy();
+            await _context.AddAsync(copy
                 .Tap(x => x.Uuid = Guid.NewGuid())
                 .Tap(x => x.CreatedAt = DateTime.UtcNow));
-            return entity.Id;
+            return copy.Id;
         }
 
         public virtual async Task<List<TEntity>> Enumerate(bool includeDeleted = false)
@@ -41,7 +42,6 @@ namespace Common.Domain.Core.Data
                 return false;
 
             var copy = entity.Copy();
-
             _context.DetachLocal(
                 entity.Id,
                 copy
