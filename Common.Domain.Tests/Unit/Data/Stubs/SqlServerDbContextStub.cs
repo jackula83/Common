@@ -13,8 +13,10 @@ namespace Common.Domain.Tests.Unit.Data.Stubs
     {
         public DbSet<EntityStub> Entities { get; set; }
 
+#pragma warning disable 8618
         public SqlServerDbContextStub(DbContextOptions options) : base(options)
         {
         }
+#pragma warning restore 8618
     }
 }

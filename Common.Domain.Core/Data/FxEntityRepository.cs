@@ -18,15 +18,17 @@ namespace Common.Domain.Core.Data
 
         public virtual async Task<int> Add(TEntity entity)
         {
-            await _context.AddAsync(entity);
+            await _context.AddAsync(entity
+                .Tap(x => x.Uuid = Guid.NewGuid())
+                .Tap(x => x.CreatedAt = DateTime.UtcNow));
             return entity.Id;
         }
 
         public virtual async Task<List<TEntity>> Enumerate(bool includeDeleted = false)
         {
-            var models = await _context.Set<TEntity>().ToListAsync();
-            var foundModels = models.FindAll(x => (includeDeleted || !x.DeleteFlag)).ToList();
-            return foundModels;
+            var entities = await _context.Set<TEntity>().ToListAsync();
+            var foundEntities = entities.FindAll(x => (includeDeleted || !x.DeleteFlag)).ToList();
+            return foundEntities;
         }
 
         public virtual async Task<TEntity?> Get(int id)
@@ -38,18 +40,25 @@ namespace Common.Domain.Core.Data
             if (m == default)
                 return false;
 
-            _context.DetachLocal(entity, entity.Id);
+            var copy = entity.Copy();
+
+            _context.DetachLocal(
+                entity.Id,
+                copy
+                .Tap(x => x.UpdatedAt = DateTime.UtcNow));
 
             return true;
         }
 
         public virtual async Task<bool> Delete(int id)
         {
-            var model = await this.Get(id);
-            if (model == default)
+            var entity = await this.Get(id);
+            if (entity == default)
                 return false;
 
-            return await this.Update(model.Tap(x => x.DeleteFlag = true));
+            return await this.Update(entity
+                .Tap(x => x.DeleteFlag = true)
+                .Tap(x => x.UpdatedAt = DateTime.UtcNow));
         }
 
         public virtual async Task<bool> Delete(TEntity entity)
