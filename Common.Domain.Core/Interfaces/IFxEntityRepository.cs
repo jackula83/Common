@@ -9,7 +9,7 @@ namespace Common.Domain.Core.Interfaces
         where TEntity : FxEntity
     {
         Task<int> Add(TEntity entity);
-        Task<List<TEntity>> Enumerate(bool includeDeleted);
+        Task<List<TEntity>> Enumerate(bool includeDeleted = false);
         Task<TEntity?> Get(int id);
         Task<bool> Update(TEntity entity);
         Task<bool> Delete(int id);

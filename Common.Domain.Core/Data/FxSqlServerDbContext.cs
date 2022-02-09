@@ -17,18 +17,6 @@ namespace Common.Domain.Core.Data
                 x.Property(p => p.Id)
                     .ValueGeneratedOnAdd()
                     .UseIdentityColumn();
-
-                x.Property(p => p.Uuid)
-                    .HasDefaultValueSql("NEWID()")
-                    .ValueGeneratedOnAdd();
-
-                x.Property(p => p.CreatedAt)
-                    .HasDefaultValueSql("GETUTCDATE()")
-                    .ValueGeneratedOnAdd();
-
-                x.Property(p => p.UpdatedAt)
-                    .HasDefaultValueSql("GETUTCDATE()")
-                    .ValueGeneratedOnUpdate();
             });
         }
     }

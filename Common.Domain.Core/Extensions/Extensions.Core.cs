@@ -1,4 +1,6 @@
-﻿namespace Common.Domain.Core.Extensions
+﻿using Newtonsoft.Json;
+
+namespace Common.Domain.Core.Extensions
 {
     public static partial class Extensions
     {
@@ -6,6 +8,13 @@
         {
             action(@object);
             return @object;
+        }
+
+        public static T Copy<T>(this T @object)
+            where T : class
+        {
+            var serial = JsonConvert.SerializeObject(@object);
+            return JsonConvert.DeserializeObject<T>(serial)!;
         }
     }
 }
