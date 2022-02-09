@@ -1,5 +1,4 @@
-﻿using Common.Domain.Core.Extensions;
-using Common.Domain.Tests.Unit.Data.Stubs;
+﻿using Common.Domain.Tests.Unit.Data.Stubs;
 using Common.Domain.Tests.Unit.Models.Stubs;
 using Common.Domain.Tests.Utilities;
 using System.Threading;
@@ -10,8 +9,8 @@ namespace Common.Domain.Tests.Unit.Data
 {
     public class UnitOfWorkStubTest
     {
-        private UnitOfWorkStub _instance;
-        private SqlServerDbContextStub _context;
+        private readonly UnitOfWorkStub _instance;
+        private readonly SqlServerDbContextStub _context;
 
         public UnitOfWorkStubTest()
         {
