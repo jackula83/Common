@@ -1,7 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace Common.Domain.Core.Models
 {
+    [Index(nameof(Uuid), Name = "idx_uuid")]
+    [Index(nameof(DeleteFlag), Name = "idx_deleteFlag")]
     public abstract class FxEntity : FxModel
     {
         [Key]
