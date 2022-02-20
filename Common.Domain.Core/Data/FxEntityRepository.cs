@@ -16,13 +16,13 @@ namespace Common.Domain.Core.Data
             _context = context;
         }
 
-        public virtual async Task<int> Add(TEntity entity)
+        public virtual async Task<TEntity> Add(TEntity entity)
         {
             var copy = entity.Copy();
             await _context.AddAsync(copy
                 .Tap(x => x.Uuid = Guid.NewGuid())
                 .Tap(x => x.CreatedAt = DateTime.UtcNow));
-            return copy.Id;
+            return copy;
         }
 
         public virtual async Task<List<TEntity>> Enumerate(bool includeDeleted = false)
@@ -35,11 +35,11 @@ namespace Common.Domain.Core.Data
         public virtual async Task<TEntity?> Get(int id)
             => await _context.Set<TEntity>().FindAsync(id);
 
-        public virtual async Task<bool> Update(TEntity entity)
+        public virtual async Task<TEntity?> Update(TEntity entity)
         {
             var m = await this.Get(entity.Id);
             if (m == default)
-                return false;
+                return default;
 
             var copy = entity.Copy();
             _context.DetachLocal(
@@ -47,24 +47,24 @@ namespace Common.Domain.Core.Data
                 copy
                 .Tap(x => x.UpdatedAt = DateTime.UtcNow));
 
-            return true;
+            return copy;
         }
 
-        public virtual async Task<bool> Delete(int id)
+        public virtual async Task<TEntity?> Delete(int id)
         {
             var entity = await this.Get(id);
             if (entity == default)
-                return false;
+                return default;
 
             return await this.Update(entity
                 .Tap(x => x.DeleteFlag = true)
                 .Tap(x => x.UpdatedAt = DateTime.UtcNow));
         }
 
-        public virtual async Task<bool> Delete(TEntity entity)
+        public virtual async Task<TEntity?> Delete(TEntity entity)
         {
             if (entity == default)
-                return false;
+                return default;
 
             return await this.Delete(entity.Id);
         }
