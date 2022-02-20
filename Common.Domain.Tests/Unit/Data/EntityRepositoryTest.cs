@@ -36,11 +36,11 @@ namespace Common.Domain.Tests.Unit.Data
             var serialExpected = JsonConvert.SerializeObject(entity);
 
             // act
-            var id = await _repository.Add(entity);
+            var savedEntity = await _repository.Add(entity);
             var serialActual = JsonConvert.SerializeObject(entity);
 
             // assert
-            Assert.Equal(1, id);
+            Assert.Equal(1, savedEntity.Id);
             Assert.Equal(serialExpected, serialActual);
         }
 
@@ -51,12 +51,12 @@ namespace Common.Domain.Tests.Unit.Data
             var entity = new EntityStub();
 
             // act
-            var id = await _repository.Add(entity);
-            var dbEntity = await _repository.Get(id);
+            var savedEntity = await _repository.Add(entity);
+            var dbEntity = await _repository.Get(savedEntity.Id);
 
             // assert
             Assert.NotNull(dbEntity);
-            Assert.Equal(1, id);
+            Assert.Equal(1, savedEntity.Id);
             Assert.Equal(1, dbEntity!.Id);
             Assert.NotEqual(entity.Uuid, dbEntity!.Uuid);
             Assert.NotEqual(entity.CreatedAt, dbEntity!.CreatedAt);

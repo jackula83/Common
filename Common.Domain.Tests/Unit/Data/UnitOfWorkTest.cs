@@ -22,17 +22,17 @@ namespace Common.Domain.Tests.Unit.Data
         public async Task Save_AddNewEntities_EntityAddedToDatabase()
         {
             // arrange
-            var id1 = await _instance.Repository.Add(new EntityStub());
-            var id2 = await _instance.Repository.Add(new EntityStub());
+            var entity1 = await _instance.Repository.Add(new EntityStub());
+            var entity2 = await _instance.Repository.Add(new EntityStub());
 
             // act
-            var dbEntity1 = await _instance.Repository.Get(id1);
-            var dbEntity2 = await _instance.Repository.Get(id2);
+            var dbEntity1 = await _instance.Repository.Get(entity1.Id);
+            var dbEntity2 = await _instance.Repository.Get(entity2.Id);
             await _instance.Save();
 
             // assert
-            Assert.Equal(1, id1);
-            Assert.Equal(2, id2);
+            Assert.Equal(1, entity1.Id);
+            Assert.Equal(2, entity2.Id);
             Assert.NotNull(dbEntity1);
             Assert.NotNull(dbEntity2);
             Assert.Equal(1, dbEntity1!.Id);
@@ -62,12 +62,12 @@ namespace Common.Domain.Tests.Unit.Data
         public async Task Save_DeleteEntity_GetsDeletedEntity()
         {
             // arrange
-            var id = await _instance.Repository.Add(new EntityStub());
+            var entity = await _instance.Repository.Add(new EntityStub());
 
             // act
             await _instance.Save();
-            await _instance.Repository.Delete(id);
-            var deletedEntity = await _instance.Repository.Get(id);
+            await _instance.Repository.Delete(entity.Id);
+            var deletedEntity = await _instance.Repository.Get(entity.Id);
 
             // assert
             Assert.NotNull(deletedEntity);
@@ -79,15 +79,15 @@ namespace Common.Domain.Tests.Unit.Data
         public async Task Save_UpdateEntity_ConsistentCreatedAndUpdatedTimestamps()
         {
             // arrange
-            var id = await _instance.Repository.Add(new EntityStub());
+            var entity = await _instance.Repository.Add(new EntityStub());
             // unfortunately SQL server works in 3ms per tick on default datetime, so we need to intentionally pause after the update
             Thread.Sleep(3);
 
             // act
-            var dbEntityBeforeUpdate = await _instance.Repository.Get(id);
+            var dbEntityBeforeUpdate = await _instance.Repository.Get(entity.Id);
             await _instance.Save();
             await _instance.Repository.Update(dbEntityBeforeUpdate!);
-            var dbEntityAfterUpdate = await _instance.Repository.Get(id);
+            var dbEntityAfterUpdate = await _instance.Repository.Get(entity.Id);
 
             // assert
             Assert.NotNull(dbEntityBeforeUpdate);
