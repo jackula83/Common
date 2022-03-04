@@ -36,7 +36,7 @@ namespace Common.Infra.MQ.Tests.Abstracts
         }
 
         [Fact]
-        public async Task Publish_GivenAnEvent_PublishedWithExpectedBody()
+        public async virtual Task Publish_GivenAnEvent_PublishedWithExpectedBody()
         {
             // arrange
             var @event = new EventStub();
@@ -55,7 +55,7 @@ namespace Common.Infra.MQ.Tests.Abstracts
         }
 
         [Fact]
-        public async Task Subscribe_WhenSubscribed_ConsumerStartedWithExpectedSettings()
+        public async virtual Task Subscribe_WhenSubscribed_ConsumerStartedWithExpectedSettings()
         {
             // arrange
             var @event = new EventStub();
@@ -76,7 +76,7 @@ namespace Common.Infra.MQ.Tests.Abstracts
         }
 
         [Fact]
-        public async Task ConsumerReceived_WhenEventArrivedForConsumer_HandlerIsInvoked()
+        public async virtual Task ConsumerReceived_WhenEventArrivedForConsumer_HandlerIsInvoked()
         {
             // arrange
             var stub = new EventStub();
