@@ -2,13 +2,14 @@
 
 namespace Common.Domain.Core.Interfaces
 {
-    public interface IEventHandler { }
+    public interface IEventHandler
+    {
+        Type EventHandled { get; }
+    }
 
     public interface IEventHandler<TEvent> : IEventHandler
         where TEvent : FxEvent
     {
-        string EventHandled { get; }
-
         Task Handle(TEvent @event);
     }
 }

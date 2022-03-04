@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace Common.Domain.Core.Handlers
 {
-    public abstract class EventHandler<TEvent> : IEventHandler<TEvent> where TEvent : FxEvent
+
+    public abstract class FxEventHandler<TEvent> : IEventHandler<TEvent> 
+        where TEvent : FxEvent
     {
-        public virtual string EventHandled => typeof(TEvent).Name;
+        public virtual Type EventHandled => typeof(TEvent);
 
         public abstract Task Handle(TEvent @event);
     }
