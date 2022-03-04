@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Domain.Tests", "Comm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Infra.MQ", "Common.Infra.MQ\Common.Infra.MQ.csproj", "{06284D61-46C2-457B-9287-4059A5C71DF8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Infra.MQ.Tests", "Common.Infra.MQ.Tests\Common.Infra.MQ.Tests.csproj", "{2CCCCF3F-646F-4D4C-9224-4DFF2C826C65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,12 +31,17 @@ Global
 		{06284D61-46C2-457B-9287-4059A5C71DF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06284D61-46C2-457B-9287-4059A5C71DF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06284D61-46C2-457B-9287-4059A5C71DF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CCCCF3F-646F-4D4C-9224-4DFF2C826C65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CCCCF3F-646F-4D4C-9224-4DFF2C826C65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CCCCF3F-646F-4D4C-9224-4DFF2C826C65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CCCCF3F-646F-4D4C-9224-4DFF2C826C65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{872D5FC2-0B0D-4A9C-ADF2-4086678F7AEA} = {EC90F3F3-0970-4E47-940D-E1B648F4540A}
+		{2CCCCF3F-646F-4D4C-9224-4DFF2C826C65} = {EC90F3F3-0970-4E47-940D-E1B648F4540A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E649EE29-2815-406D-88CF-1A5DC8E593E5}

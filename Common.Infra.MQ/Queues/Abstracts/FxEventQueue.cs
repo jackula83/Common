@@ -4,35 +4,35 @@ using Common.Domain.Core.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
-namespace Common.Infra.MQ.Abstracts
+namespace Common.Infra.MQ.Queues.Abstracts
 {
     /// <summary>
     /// The base event queue, derived services should have a singleton scope
     /// </summary>
-    public abstract class EventQueue : IEventQueue
+    public abstract class FxEventQueue : IEventQueue
     {
         protected readonly IServiceProvider _serviceProvider;
 
         /// <summary>
         /// Event names -> List of handlers for the event
         /// </summary>
-        protected readonly Dictionary<string, List<IEventHandler>> _eventHandlers;
+        protected readonly Dictionary<string, List<FxEventHandler>> _eventHandlers;
 
-        protected abstract Task StartConsumingEvents<TEvent>()
+        protected abstract Task StartConsumingEvents<TEvent>(string eventName)
             where TEvent : FxEvent, new();
 
-        public EventQueue(IServiceProvider serviceProvider)
+        public FxEventQueue(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             _eventHandlers = new();
         }
 
-        public abstract Task Publish<TEvent>(TEvent @event) 
+        public abstract Task Publish<TEvent>(TEvent @event)
             where TEvent : FxEvent, new();
 
         public virtual async Task Subscribe<TEvent, TEventHandler>()
             where TEvent : FxEvent, new()
-            where TEventHandler : IEventHandler
+            where TEventHandler : FxEventHandler<TEvent>
         {
             var eventName = new TEvent().Name;
             var handler = _serviceProvider.GetRequiredService<TEventHandler>();
@@ -43,7 +43,7 @@ namespace Common.Infra.MQ.Abstracts
             if (!_eventHandlers[eventName].Any(x => x.GetType() == handler.GetType()))
                 _eventHandlers[eventName].Add(handler);
 
-            await this.StartConsumingEvents<TEvent>();
+            await StartConsumingEvents<TEvent>(eventName);
         }
 
         protected virtual async Task ConsumeEvent(string eventName, string payload)
@@ -55,8 +55,8 @@ namespace Common.Infra.MQ.Abstracts
             foreach (var handler in handlers)
             {
                 var @event = JsonConvert.DeserializeObject(payload, handler.EventHandled);
-                var genericType = typeof(IEventHandler<>).MakeGenericType(handler.EventHandled);
-                var handlerName = nameof(IEventHandler<FxEvent>.Handle);
+                var genericType = typeof(FxEventHandler<>).MakeGenericType(handler.EventHandled);
+                var handlerName = nameof(FxEventHandler<FxEvent>.Handle);
 
                 await (Task)genericType.GetMethod(handlerName)!.Invoke(handler, new[] { @event })!;
             }

@@ -9,6 +9,6 @@ namespace Common.Domain.Core.Interfaces
             where TEvent : FxEvent, new();
         Task Subscribe<TEvent, TEventHandler>()
             where TEvent : FxEvent, new()
-            where TEventHandler : IEventHandler;
+            where TEventHandler : FxEventHandler<TEvent>;
     }
 }

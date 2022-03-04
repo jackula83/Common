@@ -6,10 +6,4 @@ namespace Common.Domain.Core.Interfaces
     {
         Type EventHandled { get; }
     }
-
-    public interface IEventHandler<TEvent> : IEventHandler
-        where TEvent : FxEvent
-    {
-        Task Handle(TEvent @event);
-    }
 }
