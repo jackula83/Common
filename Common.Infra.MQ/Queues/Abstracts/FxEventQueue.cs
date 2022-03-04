@@ -3,6 +3,7 @@ using Common.Domain.Core.Interfaces;
 using Common.Domain.Core.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace Common.Infra.MQ.Queues.Abstracts
 {
@@ -58,7 +59,15 @@ namespace Common.Infra.MQ.Queues.Abstracts
                 var genericType = typeof(FxEventHandler<>).MakeGenericType(handler.EventHandled);
                 var handlerName = nameof(FxEventHandler<FxEvent>.Handle);
 
-                await (Task)genericType.GetMethod(handlerName)!.Invoke(handler, new[] { @event })!;
+                try
+                {
+                    await (Task)genericType.GetMethod(handlerName)!.Invoke(handler, new[] { @event })!;
+                }
+                catch (TargetInvocationException ex)
+                {
+                    /// throw the actual exception from the handler, since reflection by default hides it under <see cref="TargetInvocationException"/>
+                    throw ex.InnerException!;
+                }
             }
         }
     }

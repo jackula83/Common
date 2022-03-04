@@ -7,11 +7,9 @@ namespace Common.Infra.MQ.Tests.Queues.Stubs
 {
     public sealed class EventHandlerStub : FxEventHandler<EventStub>, IEventHandler
     {
-        public string ExceptionMessage { get; set; } = string.Empty;
-
         public override Task Handle(EventStub @event)
         {
-            throw new Exception(this.ExceptionMessage);
+            throw new EventExceptionStub();
         }
     }
 }
