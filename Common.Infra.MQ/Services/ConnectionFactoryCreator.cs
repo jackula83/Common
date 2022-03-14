@@ -19,6 +19,8 @@ namespace Common.Infra.MQ.Services
             var factory = new ConnectionFactory()
             {
                 HostName = _environment.Get(RabbitEnv.Hostname),
+                UserName = _environment.Get(RabbitEnv.Username),
+                Password = _environment.Get(RabbitEnv.Password),
                 DispatchConsumersAsync = dispatchConsumersAsync
             };
 
