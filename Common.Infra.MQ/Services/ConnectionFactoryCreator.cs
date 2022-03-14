@@ -21,6 +21,8 @@ namespace Common.Infra.MQ.Services
                 HostName = _environment.Get(RabbitEnv.Hostname),
                 UserName = _environment.Get(RabbitEnv.Username),
                 Password = _environment.Get(RabbitEnv.Password),
+                VirtualHost = "/",
+                Port = Protocols.DefaultProtocol.DefaultPort,
                 DispatchConsumersAsync = dispatchConsumersAsync
             };
 
