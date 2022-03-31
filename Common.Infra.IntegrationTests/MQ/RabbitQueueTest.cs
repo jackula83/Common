@@ -80,6 +80,11 @@ namespace Common.Infra.IntegrationTests.MQ
             }
         }
 
+        /// <summary>
+        /// TODO: Move this to a fixture
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DockerApiException"></exception>
         private async Task<string> CreateContainer()
         {
             // management is good for diagnosis
@@ -144,12 +149,11 @@ namespace Common.Infra.IntegrationTests.MQ
                 CorrelationId = Guid.NewGuid().ToString()
             };
 
-            await _target.Subscribe<TestEvent, TestEventHandler>();
-            await Task.Delay(5000);
-
             // act
+            await _target.Subscribe<TestEvent, TestEventHandler>();
             await _target.Publish(@event);
-            await Task.Delay(5000);
+
+            while (await _target.Count<TestEvent>() > 0) ;
 
             // assert
             _eventMonitorMock.Verify(x => x.EventMonitored(@event));

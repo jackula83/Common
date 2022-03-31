@@ -10,5 +10,7 @@ namespace Common.Domain.Core.Interfaces
         Task Subscribe<TEvent, TEventHandler>()
             where TEvent : FxEvent, new()
             where TEventHandler : FxEventHandler<TEvent>;
+        Task<uint> Count<TEvent>()
+            where TEvent : FxEvent, new();
     }
 }

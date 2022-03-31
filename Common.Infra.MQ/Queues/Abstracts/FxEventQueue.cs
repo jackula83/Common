@@ -19,6 +19,9 @@ namespace Common.Infra.MQ.Queues.Abstracts
         /// </summary>
         protected readonly Dictionary<string, List<FxEventHandler>> _eventHandlers;
 
+        public abstract Task<uint> Count<TEvent>()
+            where TEvent : FxEvent, new();
+
         protected abstract Task StartConsumingEvents<TEvent>(string eventName)
             where TEvent : FxEvent, new();
 

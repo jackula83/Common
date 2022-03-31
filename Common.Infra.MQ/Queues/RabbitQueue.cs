@@ -16,6 +16,8 @@ namespace Common.Infra.MQ.Queues
         private IConnection _connection;
         private IModel _channel;
 
+        private static string DefaultExchange = string.Empty;
+
         public RabbitQueue(IServiceProvider serviceProvider, IConnectionFactoryCreator creator) 
             : base(serviceProvider)
         {
@@ -35,17 +37,22 @@ namespace Common.Infra.MQ.Queues
             var body = Encoding.UTF8.GetBytes(payload);
 
             // publish to rabbitmq
-            channel.BasicPublish(String.Empty, @event.Name, default, body);
+            channel.BasicPublish(DefaultExchange, @event.Name, default, body);
+        }
+
+        public override async Task<uint> Count<TEvent>()
+        {
+            await Task.CompletedTask;
+
+            this.CreateChannel();
+            return _channel.MessageCount(new TEvent().Name);
         }
 
         protected override async Task StartConsumingEvents<TEvent>(string eventName)
         {
             await Task.CompletedTask;
 
-            if (_connection == default)
-                _connection = _connectionCreator.CreateConnection(true);
-            if (_channel == default)
-                _channel = _connection.CreateModel();
+            this.CreateChannel(true);
 
             this.QueueDeclare(_channel, eventName);
 
@@ -66,5 +73,13 @@ namespace Common.Infra.MQ.Queues
 
         private QueueDeclareOk QueueDeclare(IModel clientModel, string eventName)
             => clientModel.QueueDeclare(eventName, false, false, false, null);
+
+        private void CreateChannel(bool dispatchConsumersAsync = true)
+        {
+            if (_connection == default)
+                _connection = _connectionCreator.CreateConnection(dispatchConsumersAsync);
+            if (_channel == default)
+                _channel = _connection.CreateModel();
+        }
     }
 }
