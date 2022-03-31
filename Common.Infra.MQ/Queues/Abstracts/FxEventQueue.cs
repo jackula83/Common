@@ -50,6 +50,19 @@ namespace Common.Infra.MQ.Queues.Abstracts
             await StartConsumingEvents<TEvent>(eventName);
         }
 
+        public virtual async Task<TEventHandler?> GetHandler<TEvent, TEventHandler>()
+            where TEvent : FxEvent, new()
+            where TEventHandler : FxEventHandler<TEvent>
+        {
+            await Task.CompletedTask;
+
+            var eventName = new TEvent().Name;
+            if (!_eventHandlers.ContainsKey(eventName))
+                return default;
+
+            return _eventHandlers[eventName].FirstOrDefault(x => x is TEventHandler) as TEventHandler;
+        }
+
         protected virtual async Task ConsumeEvent(string eventName, string payload)
         {
             if (!_eventHandlers.ContainsKey(eventName))

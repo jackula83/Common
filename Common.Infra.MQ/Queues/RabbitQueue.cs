@@ -22,6 +22,8 @@ namespace Common.Infra.MQ.Queues
             : base(serviceProvider)
         {
             _connectionCreator = creator;
+            _connection = _connectionCreator.CreateConnection(true);
+            _channel = _connection.CreateModel();
         }
 
         public override async Task Publish<TEvent>(TEvent @event)
@@ -44,17 +46,14 @@ namespace Common.Infra.MQ.Queues
         {
             await Task.CompletedTask;
 
-            this.CreateChannel();
-            return _channel.MessageCount(new TEvent().Name);
+            return _channel!.MessageCount(new TEvent().Name);
         }
 
         protected override async Task StartConsumingEvents<TEvent>(string eventName)
         {
             await Task.CompletedTask;
 
-            this.CreateChannel(true);
-
-            this.QueueDeclare(_channel, eventName);
+            this.QueueDeclare(_channel!, eventName);
 
             var consumer = new AsyncEventingBasicConsumer(_channel);
             consumer.Received += OnConsumerReceived;
@@ -73,13 +72,5 @@ namespace Common.Infra.MQ.Queues
 
         private QueueDeclareOk QueueDeclare(IModel clientModel, string eventName)
             => clientModel.QueueDeclare(eventName, false, false, false, null);
-
-        private void CreateChannel(bool dispatchConsumersAsync = true)
-        {
-            if (_connection == default)
-                _connection = _connectionCreator.CreateConnection(dispatchConsumersAsync);
-            if (_channel == default)
-                _channel = _connection.CreateModel();
-        }
     }
 }

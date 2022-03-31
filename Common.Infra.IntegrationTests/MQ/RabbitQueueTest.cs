@@ -35,10 +35,7 @@ namespace Common.Infra.IntegrationTests.MQ
         private readonly IServiceProvider _serviceProvider;
         private readonly DockerClient _docker;
         private readonly string _rabbitContainerId;
-        private readonly Mock<ITestEventMonitor> _eventMonitorMock;
         private readonly Mock<IEnvironment> _environmentMock;
-
-        private List<JSONMessage> _progress = new();
 
         public RabbitQueueTest()
         {
@@ -46,17 +43,36 @@ namespace Common.Infra.IntegrationTests.MQ
             _docker = new DockerClientConfiguration().CreateClient();
             _rabbitContainerId = this.CreateContainer().Result;
 
-            // TBD: Replace sleep with reading container logs for initialisation
-            // for now, 5s should be enough to boot up rabbitmq server
-            Task.Delay(5000).Wait();
+            var cancellationToken = new CancellationTokenSource();
+            var containerInitProgress = new Progress<string>(message =>
+                {
+                    if (message.Contains("Server startup complete"))
+                        cancellationToken.Cancel();
+                });
+            var containerLogParams = new ContainerLogsParameters
+            {
+                Follow = true,
+                ShowStdout = true,
+                ShowStderr = true,
+            };
+            try
+            {
+                _docker.Containers.GetContainerLogsAsync(_rabbitContainerId, containerLogParams, cancellationToken.Token, containerInitProgress).Wait();
+            }
+            catch (AggregateException ex) 
+            {
+                if (!(ex.InnerException != null && ex.InnerException is TaskCanceledException))
+                    throw ex.InnerException!;
+            }
 
             // initialise target
-            _eventMonitorMock = new();
             _environmentMock = new();
+            _environmentMock.Setup(x => x.Get(RabbitEnv.Hostname)).Returns("localhost");
+            _environmentMock.Setup(x => x.Get(RabbitEnv.Username)).Returns(RabbitUserName);
+            _environmentMock.Setup(x => x.Get(RabbitEnv.Password)).Returns(RabbitPassword);
             _serviceProvider = Utils.CreateServiceProvider(svc =>
             {
                 svc.AddTransient(_ => _environmentMock.Object);
-                svc.AddTransient(_ => _eventMonitorMock.Object);
                 svc.AddTransient<TestEventHandler>();
                 svc.AddScoped<IConnectionFactoryCreator, ConnectionFactoryCreator>();
                 svc.AddSingleton<IEventQueue, RabbitQueue>();
@@ -101,6 +117,7 @@ namespace Common.Infra.IntegrationTests.MQ
                 new Progress<JSONMessage>()
             );
 
+            // TODO: add some safety here to kill existing integration test rabbitmq container
             // run the container
             var servicePort = Protocols.DefaultProtocol.DefaultPort.ToString();
             var managementPort = "15672";
@@ -141,22 +158,21 @@ namespace Common.Infra.IntegrationTests.MQ
         public async Task Subscribe_PublishEvent_SubscriberConsumesEvent()
         {
             // arrange
-            _environmentMock.Setup(x => x.Get(RabbitEnv.Hostname)).Returns("localhost");
-            _environmentMock.Setup(x => x.Get(RabbitEnv.Username)).Returns(RabbitUserName);
-            _environmentMock.Setup(x => x.Get(RabbitEnv.Password)).Returns(RabbitPassword);
             var @event = new TestEvent()
             {
                 CorrelationId = Guid.NewGuid().ToString()
             };
+            await _target.Subscribe<TestEvent, TestEventHandler>();
+            var handlerInstance = await _target.GetHandler<TestEvent, TestEventHandler>();
 
             // act
-            await _target.Subscribe<TestEvent, TestEventHandler>();
             await _target.Publish(@event);
 
             while (await _target.Count<TestEvent>() > 0) ;
+            while (!handlerInstance!.EventProcessed) ;
 
             // assert
-            _eventMonitorMock.Verify(x => x.EventMonitored(@event));
+            Assert.True(handlerInstance.EventProcessed);
         }
     }
 }
