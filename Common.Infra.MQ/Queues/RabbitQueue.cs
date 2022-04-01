@@ -59,7 +59,7 @@ namespace Common.Infra.MQ.Queues
             consumer.Received += OnConsumerReceived;
 
             // start the consumer
-            _channel.BasicConsume(eventName, true, consumer);
+            _channel.BasicConsume(eventName, false, consumer);
         }
 
         public async Task OnConsumerReceived(object sender, BasicDeliverEventArgs @event)
@@ -68,6 +68,7 @@ namespace Common.Infra.MQ.Queues
             var payload = Encoding.UTF8.GetString(@event.Body.Span);
 
             await this.ConsumeEvent(eventName, payload);
+            _channel.BasicAck(@event.DeliveryTag, false);
         }
 
         private QueueDeclareOk QueueDeclare(IModel clientModel, string eventName)

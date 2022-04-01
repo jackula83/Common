@@ -7,16 +7,17 @@ namespace Common.Infra.IntegrationTests.MQ.Stubs
 {
     public sealed class TestEventHandler : FxEventHandler<TestEvent>, IEventHandler
     {
-        public bool EventProcessed { get; set; } = false;
+        private readonly ITestEventMonitor _testEventMonitor;
 
-        public TestEventHandler()
+        public TestEventHandler(ITestEventMonitor eventMonitor)
         {
+            _testEventMonitor = eventMonitor;
         }
 
         public override async Task Handle(TestEvent @event)
         {
             await Task.CompletedTask;
-            this.EventProcessed = true;
+            _testEventMonitor.EventMonitored(@event.CorrelationId);
         }
     }
 }

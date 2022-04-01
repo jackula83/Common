@@ -8,6 +8,6 @@ namespace Common.Infra.IntegrationTests.MQ.Stubs
 {
     public interface ITestEventMonitor
     {
-        void EventMonitored(TestEvent @event);
+        void EventMonitored(string correlationId);
     }
 }

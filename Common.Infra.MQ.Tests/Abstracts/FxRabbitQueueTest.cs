@@ -30,9 +30,9 @@ namespace Common.Infra.MQ.Tests.Abstracts
             _connectionCreatorMock = new();
             _connectionMock = new();
             _clientMock = new();
-            _target = new(this.ServiceProvider, _connectionCreatorMock.Object);
             _connectionCreatorMock.Setup(x => x.CreateConnection(It.IsAny<bool>())).Returns(_connectionMock.Object);
             _connectionMock.Setup(x => x.CreateModel()).Returns(_clientMock.Object);
+            _target = new(this.ServiceProvider, _connectionCreatorMock.Object);
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace Common.Infra.MQ.Tests.Abstracts
             // assert
             _clientMock.Verify(x => x.BasicConsume(
                 It.Is<string>(v => v == @event.Name),
-                It.Is<bool>(v => v == true),
+                It.Is<bool>(v => v == false),
                 It.IsAny<string>(),
                 It.IsAny<bool>(),
                 It.IsAny<bool>(),

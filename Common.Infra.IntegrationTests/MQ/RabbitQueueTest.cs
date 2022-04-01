@@ -1,4 +1,5 @@
 ﻿using Common.Domain.Core.Interfaces;
+using Common.Domain.Core.Models;
 using Common.Domain.Tests.Utilities;
 using Common.Infra.IntegrationTests.Fixtures;
 using Common.Infra.IntegrationTests.MQ.Stubs;
@@ -17,15 +18,18 @@ namespace Common.Infra.IntegrationTests.MQ
     /// <summary>
     /// Only 1 basic test atm, want to implement basic ack before adding more tests
     /// </summary>
-    public class RabbitQueueTest : IClassFixture<RabbitContainerFixture>
+    public class RabbitQueueTest : IDisposable, IClassFixture<RabbitContainerFixture>
     {
         private readonly IEventQueue _target;
         private readonly IServiceProvider _serviceProvider;
+        private readonly Mock<ITestEventMonitor> _eventMonitorMock;
         private readonly Mock<IEnvironment> _environmentMock;
+        private readonly RabbitContainerFixture _rabbitFixture;
 
-        public RabbitQueueTest()
+        public RabbitQueueTest(RabbitContainerFixture rabbitFixture)
         {
-            // initialise target
+            _rabbitFixture = rabbitFixture;
+            _eventMonitorMock = new();
             _environmentMock = new();
             _environmentMock.Setup(x => x.Get(RabbitEnv.Hostname)).Returns("localhost");
             _environmentMock.Setup(x => x.Get(RabbitEnv.Username)).Returns(RabbitContainerFixture.RabbitUserName);
@@ -33,6 +37,7 @@ namespace Common.Infra.IntegrationTests.MQ
             _serviceProvider = Utils.CreateServiceProvider(svc =>
             {
                 svc.AddTransient(_ => _environmentMock.Object);
+                svc.AddTransient(_ => _eventMonitorMock.Object);
                 svc.AddTransient<TestEventHandler>();
                 svc.AddScoped<IConnectionFactoryCreator, ConnectionFactoryCreator>();
                 svc.AddSingleton<IEventQueue, RabbitQueue>();
@@ -48,17 +53,29 @@ namespace Common.Infra.IntegrationTests.MQ
             {
                 CorrelationId = Guid.NewGuid().ToString()
             };
-            await _target.Subscribe<TestEvent, TestEventHandler>();
-            var handlerInstance = await _target.GetHandler<TestEvent, TestEventHandler>();
 
             // act
+            await _target.Subscribe<TestEvent, TestEventHandler>();
             await _target.Publish(@event);
-
             while (await _target.Count<TestEvent>() > 0) ;
-            while (!handlerInstance!.EventProcessed) ;
 
             // assert
-            Assert.True(handlerInstance.EventProcessed);
+            _eventMonitorMock.Verify(x => x.EventMonitored(@event.CorrelationId));
+        }
+
+        [Fact]
+        public async Task Subscribe_NeverPublishEvent_SubscriberDoesNotConsumeEvent()
+        {
+            // act
+            await _target.Subscribe<TestEvent, TestEventHandler>();
+
+            // assert
+            _eventMonitorMock.Verify(x => x.EventMonitored(It.IsAny<string>()), Times.Never());
+        }
+
+        public void Dispose()
+        {
+            _rabbitFixture.ResetContainer().Wait();
         }
     }
 }
