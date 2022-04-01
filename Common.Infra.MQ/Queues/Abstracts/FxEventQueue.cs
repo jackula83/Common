@@ -19,6 +19,9 @@ namespace Common.Infra.MQ.Queues.Abstracts
         /// </summary>
         protected readonly Dictionary<string, List<FxEventHandler>> _eventHandlers;
 
+        public abstract Task<uint> Count<TEvent>()
+            where TEvent : FxEvent, new();
+
         protected abstract Task StartConsumingEvents<TEvent>(string eventName)
             where TEvent : FxEvent, new();
 
@@ -45,6 +48,19 @@ namespace Common.Infra.MQ.Queues.Abstracts
                 _eventHandlers[eventName].Add(handler);
 
             await StartConsumingEvents<TEvent>(eventName);
+        }
+
+        public virtual async Task<TEventHandler?> GetHandler<TEvent, TEventHandler>()
+            where TEvent : FxEvent, new()
+            where TEventHandler : FxEventHandler<TEvent>
+        {
+            await Task.CompletedTask;
+
+            var eventName = new TEvent().Name;
+            if (!_eventHandlers.ContainsKey(eventName))
+                return default;
+
+            return _eventHandlers[eventName].FirstOrDefault(x => x is TEventHandler) as TEventHandler;
         }
 
         protected virtual async Task ConsumeEvent(string eventName, string payload)

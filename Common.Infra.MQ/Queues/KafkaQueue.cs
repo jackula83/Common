@@ -15,6 +15,11 @@ namespace Common.Infra.MQ.Queues
         {
         }
 
+        public override Task<uint> Count<TEvent>()
+        {
+            throw new NotImplementedException();
+        }
+
         public override Task Publish<TEvent>(TEvent @event)
         {
             throw new NotImplementedException();

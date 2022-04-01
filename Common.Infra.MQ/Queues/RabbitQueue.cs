@@ -13,11 +13,17 @@ namespace Common.Infra.MQ.Queues
     public sealed class RabbitQueue : FxEventQueue, IEventQueue
     {
         private readonly IConnectionFactoryCreator _connectionCreator;
+        private IConnection _connection;
+        private IModel _channel;
+
+        private static string DefaultExchange = string.Empty;
 
         public RabbitQueue(IServiceProvider serviceProvider, IConnectionFactoryCreator creator) 
             : base(serviceProvider)
         {
             _connectionCreator = creator;
+            _connection = _connectionCreator.CreateConnection(true);
+            _channel = _connection.CreateModel();
         }
 
         public override async Task Publish<TEvent>(TEvent @event)
@@ -25,31 +31,35 @@ namespace Common.Infra.MQ.Queues
             await Task.CompletedTask;
 
             using var connection = _connectionCreator.CreateConnection();
-            using var client = connection.CreateModel();
+            using var channel = connection.CreateModel();
 
-            this.QueueDeclare(client, @event.Name);
+            this.QueueDeclare(channel, @event.Name);
 
             var payload = JsonConvert.SerializeObject(@event);
             var body = Encoding.UTF8.GetBytes(payload);
 
             // publish to rabbitmq
-            client.BasicPublish(String.Empty, @event.Name, default, body);
+            channel.BasicPublish(DefaultExchange, @event.Name, default, body);
+        }
+
+        public override async Task<uint> Count<TEvent>()
+        {
+            await Task.CompletedTask;
+
+            return _channel!.MessageCount(new TEvent().Name);
         }
 
         protected override async Task StartConsumingEvents<TEvent>(string eventName)
         {
             await Task.CompletedTask;
 
-            using var connection = _connectionCreator.CreateConnection(true);
-            using var client = connection.CreateModel();
+            this.QueueDeclare(_channel!, eventName);
 
-            this.QueueDeclare(client, eventName);
-
-            var consumer = new AsyncEventingBasicConsumer(client);
+            var consumer = new AsyncEventingBasicConsumer(_channel);
             consumer.Received += OnConsumerReceived;
 
             // start the consumer
-            client.BasicConsume(eventName, true, consumer);
+            _channel.BasicConsume(eventName, true, consumer);
         }
 
         public async Task OnConsumerReceived(object sender, BasicDeliverEventArgs @event)
