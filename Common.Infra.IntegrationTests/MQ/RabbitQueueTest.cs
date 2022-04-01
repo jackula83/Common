@@ -21,11 +21,13 @@ namespace Common.Infra.IntegrationTests.MQ
     {
         private readonly IEventQueue _target;
         private readonly IServiceProvider _serviceProvider;
+        private readonly Mock<ITestEventMonitor> _eventMonitorMock;
         private readonly Mock<IEnvironment> _environmentMock;
 
         public RabbitQueueTest()
         {
             // initialise target
+            _eventMonitorMock = new();
             _environmentMock = new();
             _environmentMock.Setup(x => x.Get(RabbitEnv.Hostname)).Returns("localhost");
             _environmentMock.Setup(x => x.Get(RabbitEnv.Username)).Returns(RabbitContainerFixture.RabbitUserName);
@@ -33,6 +35,7 @@ namespace Common.Infra.IntegrationTests.MQ
             _serviceProvider = Utils.CreateServiceProvider(svc =>
             {
                 svc.AddTransient(_ => _environmentMock.Object);
+                svc.AddTransient(_ => _eventMonitorMock.Object);
                 svc.AddTransient<TestEventHandler>();
                 svc.AddScoped<IConnectionFactoryCreator, ConnectionFactoryCreator>();
                 svc.AddSingleton<IEventQueue, RabbitQueue>();
@@ -55,10 +58,9 @@ namespace Common.Infra.IntegrationTests.MQ
             await _target.Publish(@event);
 
             while (await _target.Count<TestEvent>() > 0) ;
-            while (!handlerInstance!.EventProcessed) ;
 
             // assert
-            Assert.True(handlerInstance.EventProcessed);
+            _eventMonitorMock.Verify(x => x.EventMonitored(@event.CorrelationId));
         }
     }
 }
