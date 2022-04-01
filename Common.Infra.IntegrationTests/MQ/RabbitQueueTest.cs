@@ -51,10 +51,9 @@ namespace Common.Infra.IntegrationTests.MQ
             {
                 CorrelationId = Guid.NewGuid().ToString()
             };
-            await _target.Subscribe<TestEvent, TestEventHandler>();
-            var handlerInstance = await _target.GetHandler<TestEvent, TestEventHandler>();
 
             // act
+            await _target.Subscribe<TestEvent, TestEventHandler>();
             await _target.Publish(@event);
 
             while (await _target.Count<TestEvent>() > 0) ;
