@@ -13,7 +13,8 @@ namespace Common.Infra.IntegrationTests.Fixtures
     public class RabbitContainerFixture : IDisposable
     {
         private readonly DockerClient _docker;
-        private readonly string _rabbitContainerId;
+
+        private string _rabbitContainerId;
 
         public const string RabbitHostName = "host-rabbit";
         public const string RabbitUserName = "testUsername";
@@ -24,9 +25,20 @@ namespace Common.Infra.IntegrationTests.Fixtures
 
         public RabbitContainerFixture()
         {
+            _rabbitContainerId = string.Empty;
             _docker = new DockerClientConfiguration().CreateClient();
-            this.RemoveExistingContainer().Wait();
-            _rabbitContainerId = this.CreateContainer().Result;
+            this.ResetContainer().Wait();
+        }
+
+        public async Task ResetContainer()
+        {
+            await this.ClearContainer();
+            await this.InitContainer();
+        }
+
+        private async Task InitContainer()
+        {
+            _rabbitContainerId = await this.CreateContainer();
 
             var cancellationToken = new CancellationTokenSource();
             var containerInitProgress = new Progress<string>(message =>
@@ -42,13 +54,33 @@ namespace Common.Infra.IntegrationTests.Fixtures
             };
             try
             {
-                _docker.Containers.GetContainerLogsAsync(_rabbitContainerId, containerLogParams, cancellationToken.Token, containerInitProgress).Wait();
+                await _docker.Containers.GetContainerLogsAsync(_rabbitContainerId, containerLogParams, cancellationToken.Token, containerInitProgress);
             }
             catch (AggregateException ex)
             {
                 if (!(ex.InnerException != null && ex.InnerException is TaskCanceledException))
                     throw ex.InnerException!;
             }
+            catch (TaskCanceledException)
+            {
+            }
+        }
+
+        private async Task ClearContainer()
+        {
+            var parameters = new ContainersListParameters
+            {
+                All = true,
+            };
+            var containers = await _docker.Containers.ListContainersAsync(parameters);
+            var containerId = containers.FirstOrDefault(
+                container => container.Names.FirstOrDefault(
+                    name => string.Compare(name.Replace("/", String.Empty), RabbitContainerName, true) == 0
+                ) != default
+            )?.ID;
+
+            if (!string.IsNullOrEmpty(containerId))
+                await this.RemoveContainer(containerId);
         }
 
         private async Task<string> CreateContainer()
@@ -101,23 +133,6 @@ namespace Common.Infra.IntegrationTests.Fixtures
             throw new DockerApiException(
                 HttpStatusCode.InternalServerError,
                 $"Could not start container {response.ID}, warnings: {string.Join(",", response.Warnings)}");
-        }
-
-        private async Task RemoveExistingContainer()
-        {
-            var parameters = new ContainersListParameters
-            {
-                All = true,
-            };
-            var containers = await _docker.Containers.ListContainersAsync(parameters);
-            var containerId = containers.FirstOrDefault(
-                container => container.Names.FirstOrDefault(
-                    name => string.Compare(name.Replace("/", String.Empty), RabbitContainerName, true) == 0
-                ) != default
-            )?.ID;
-
-            if (!string.IsNullOrEmpty(containerId))
-                await this.RemoveContainer(containerId);
         }
 
         private async Task RemoveContainer(string containerId)

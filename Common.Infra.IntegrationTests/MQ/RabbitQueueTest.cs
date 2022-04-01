@@ -1,4 +1,5 @@
 ﻿using Common.Domain.Core.Interfaces;
+using Common.Domain.Core.Models;
 using Common.Domain.Tests.Utilities;
 using Common.Infra.IntegrationTests.Fixtures;
 using Common.Infra.IntegrationTests.MQ.Stubs;
@@ -17,16 +18,17 @@ namespace Common.Infra.IntegrationTests.MQ
     /// <summary>
     /// Only 1 basic test atm, want to implement basic ack before adding more tests
     /// </summary>
-    public class RabbitQueueTest : IClassFixture<RabbitContainerFixture>
+    public class RabbitQueueTest : IDisposable, IClassFixture<RabbitContainerFixture>
     {
         private readonly IEventQueue _target;
         private readonly IServiceProvider _serviceProvider;
         private readonly Mock<ITestEventMonitor> _eventMonitorMock;
         private readonly Mock<IEnvironment> _environmentMock;
+        private readonly RabbitContainerFixture _rabbitFixture;
 
-        public RabbitQueueTest()
+        public RabbitQueueTest(RabbitContainerFixture rabbitFixture)
         {
-            // initialise target
+            _rabbitFixture = rabbitFixture;
             _eventMonitorMock = new();
             _environmentMock = new();
             _environmentMock.Setup(x => x.Get(RabbitEnv.Hostname)).Returns("localhost");
@@ -55,11 +57,25 @@ namespace Common.Infra.IntegrationTests.MQ
             // act
             await _target.Subscribe<TestEvent, TestEventHandler>();
             await _target.Publish(@event);
-
             while (await _target.Count<TestEvent>() > 0) ;
 
             // assert
             _eventMonitorMock.Verify(x => x.EventMonitored(@event.CorrelationId));
+        }
+
+        [Fact]
+        public async Task Subscribe_NeverPublishEvent_SubscriberDoesNotConsumeEvent()
+        {
+            // act
+            await _target.Subscribe<TestEvent, TestEventHandler>();
+
+            // assert
+            _eventMonitorMock.Verify(x => x.EventMonitored(It.IsAny<string>()), Times.Never());
+        }
+
+        public void Dispose()
+        {
+            _rabbitFixture.ResetContainer().Wait();
         }
     }
 }
