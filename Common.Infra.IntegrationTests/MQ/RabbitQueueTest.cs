@@ -6,29 +6,19 @@ using Common.Infra.MQ.Environment;
 using Common.Infra.MQ.Interfaces;
 using Common.Infra.MQ.Queues;
 using Common.Infra.MQ.Services;
-using Common.Infra.MQ.Tests.Queues.Stubs;
-using Docker.DotNet;
-using Docker.DotNet.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using RabbitMQ.Client;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Common.Infra.IntegrationTests.MQ
 {
     /// <summary>
-    /// Can only support 1 test, move CreateContainer to project initialisation
+    /// Only 1 basic test atm, want to implement basic ack before adding more tests
     /// </summary>
     public class RabbitQueueTest : IClassFixture<RabbitContainerFixture>
     {
-
         private readonly IEventQueue _target;
         private readonly IServiceProvider _serviceProvider;
         private readonly Mock<IEnvironment> _environmentMock;
