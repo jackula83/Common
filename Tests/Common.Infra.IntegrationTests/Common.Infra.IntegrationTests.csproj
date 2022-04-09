@@ -25,8 +25,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Common.Domain.Core\Common.Domain.Core.csproj" />
     <ProjectReference Include="..\..\Common.Infra.MQ\Common.Infra.MQ.csproj" />
-    <ProjectReference Include="..\Common.Domain.Tests\Common.Domain.Tests.csproj" />
-    <ProjectReference Include="..\Common.Infra.MQ.Tests\Common.Infra.MQ.Tests.csproj" />
+    <ProjectReference Include="..\Common.Domain.Tests\Common.Domain.UnitTests.csproj" />
+    <ProjectReference Include="..\Common.Infra.MQ.Tests\Common.Infra.MQ.UnitTests.csproj" />
   </ItemGroup>
 
 </Project>
