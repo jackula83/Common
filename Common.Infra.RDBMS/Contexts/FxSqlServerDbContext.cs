@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-namespace Common.Domain.Core.Data
+﻿using Common.Domain.Core.Data;
+using Microsoft.EntityFrameworkCore;
+namespace Common.Infra.RDBMS
 {
     /// <summary>
     /// DbContext that will work with SQL Server only

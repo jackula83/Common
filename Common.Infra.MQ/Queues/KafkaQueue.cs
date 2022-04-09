@@ -1,11 +1,5 @@
 ﻿using Common.Domain.Core.Interfaces;
-using Common.Domain.Core.Models;
 using Common.Infra.MQ.Queues.Abstracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Common.Infra.MQ.Queues
 {
