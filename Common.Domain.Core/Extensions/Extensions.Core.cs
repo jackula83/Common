@@ -5,6 +5,7 @@ namespace Common.Domain.Core.Extensions
     public static partial class Extensions
     {
         public static T Tap<T>(this T @object, Action<T> action)
+            where T : class
         {
             action(@object);
             return @object;

@@ -1,8 +1,6 @@
 ﻿using Common.Domain.Core.Interfaces;
-using Common.Infra.MQ.Environment;
 using Common.Infra.MQ.Interfaces;
 using Common.Infra.MQ.Queues.Abstracts;
-using Common.Infra.MQ.Services;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
