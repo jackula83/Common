@@ -20,10 +20,10 @@ namespace Common.Infra.MQ.Queues.Abstracts
         protected readonly Dictionary<string, List<FxEventHandler>> _eventHandlers;
 
         public abstract Task<uint> Count<TEvent>()
-            where TEvent : FxEvent, new();
+            where TEvent : FxEvent;
 
         protected abstract Task StartConsumingEvents<TEvent>(string eventName)
-            where TEvent : FxEvent, new();
+            where TEvent : FxEvent;
 
         public FxEventQueue(IServiceProvider serviceProvider)
         {
@@ -32,13 +32,13 @@ namespace Common.Infra.MQ.Queues.Abstracts
         }
 
         public abstract Task Publish<TEvent>(TEvent @event)
-            where TEvent : FxEvent, new();
+            where TEvent : FxEvent;
 
         public virtual async Task Subscribe<TEvent, TEventHandler>()
-            where TEvent : FxEvent, new()
+            where TEvent : FxEvent
             where TEventHandler : FxEventHandler<TEvent>
         {
-            var eventName = new TEvent().Name;
+            var eventName = typeof(TEvent).Name;
             var handler = _serviceProvider.GetRequiredService<TEventHandler>();
 
             if (!_eventHandlers.ContainsKey(eventName))
