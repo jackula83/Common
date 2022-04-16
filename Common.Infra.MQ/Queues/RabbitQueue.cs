@@ -44,7 +44,7 @@ namespace Common.Infra.MQ.Queues
         {
             await Task.CompletedTask;
 
-            return _channel!.MessageCount(new TEvent().Name);
+            return _channel!.MessageCount(typeof(TEvent).Name);
         }
 
         protected override async Task StartConsumingEvents<TEvent>(string eventName)

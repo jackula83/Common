@@ -6,11 +6,11 @@ namespace Common.Domain.Core.Interfaces
     public interface IEventQueue
     {
         Task Publish<TEvent>(TEvent @event) 
-            where TEvent : FxEvent, new();
+            where TEvent : FxEvent;
         Task Subscribe<TEvent, TEventHandler>()
-            where TEvent : FxEvent, new()
+            where TEvent : FxEvent
             where TEventHandler : FxEventHandler<TEvent>;
         Task<uint> Count<TEvent>()
-            where TEvent : FxEvent, new();
+            where TEvent : FxEvent;
     }
 }
