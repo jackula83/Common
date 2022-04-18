@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Common.Domain.Core.Data
 {
-    public abstract class FxEntityRepository<TContext, TEntity> : IFxEntityRepository<TEntity>
+    public abstract class FxEntityRepository<TContext, TEntity> : IEntityRepository<TEntity>
        where TContext : FxDbContext
        where TEntity : FxEntity
     {
@@ -68,5 +68,8 @@ namespace Common.Domain.Core.Data
 
             return await this.Delete(entity.Id);
         }
+
+        public virtual async Task Save()
+            => await _context.SaveChangesAsync();
     }
 }

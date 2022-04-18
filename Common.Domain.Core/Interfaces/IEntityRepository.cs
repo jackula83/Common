@@ -1,11 +1,11 @@
 ﻿using Common.Domain.Core.Models;
 namespace Common.Domain.Core.Interfaces
 {
-    public interface IFxEntityRepository
+    public interface IEntityRepository
     {
     }
 
-    public interface IFxEntityRepository<TEntity> : IFxEntityRepository
+    public interface IEntityRepository<TEntity> : IEntityRepository
         where TEntity : FxEntity
     {
         Task<TEntity> Add(TEntity entity);
@@ -14,5 +14,6 @@ namespace Common.Domain.Core.Interfaces
         Task<TEntity?> Update(TEntity entity);
         Task<TEntity?> Delete(int id);
         Task<TEntity?> Delete(TEntity entity);
+        Task Save();
     }
 }

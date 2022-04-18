@@ -8,9 +8,9 @@ namespace Common.Domain.Core.Handlers
         where TResponse : FxEntityQueryResponse<TEntity>, new()
         where TEntity : FxEntity
     {
-        protected readonly IFxEntityRepository<TEntity> _repository;
+        protected readonly IEntityRepository<TEntity> _repository;
 
-        public FxEntityQueryHandler(IFxEntityRepository<TEntity> repository)
+        public FxEntityQueryHandler(IEntityRepository<TEntity> repository)
             => _repository = repository;
 
         protected override async Task<TResponse> ExecuteAsync(TRequest request, CancellationToken cancellationToken = default)
