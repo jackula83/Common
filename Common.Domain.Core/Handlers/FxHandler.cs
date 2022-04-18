@@ -4,22 +4,24 @@ namespace Common.Domain.Core.Handlers
 {
     public abstract class FxHandler
     {
-        protected abstract Task<TResponse> ExecuteAsync<TRequest, TResponse>(TRequest request, CancellationToken cancellationToken)
-            where TRequest : FxRequest;
     }
 
     public abstract class FxHandler<TRequest> : FxHandler
         where TRequest : FxRequest
     {
+        protected abstract Task ExecuteAsync(TRequest request, CancellationToken cancellationToken = default);
+
         public virtual async Task Handle(TRequest request, CancellationToken cancellationToken = default)
-            => await this.ExecuteAsync<TRequest, bool>(request, cancellationToken);
+            => await this.ExecuteAsync(request, cancellationToken);
     }
 
     public abstract class FxHandler<TRequest, TResponse> : FxHandler
         where TRequest : FxRequest
         where TResponse : FxResponse
     {
+        protected abstract Task<TResponse> ExecuteAsync(TRequest request, CancellationToken cancellationToken = default);
+
         public virtual async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken = default)
-            => await this.ExecuteAsync<TRequest, TResponse>(request, cancellationToken);
+            => await this.ExecuteAsync(request, cancellationToken);
     }
 }
