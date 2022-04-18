@@ -64,7 +64,7 @@ namespace Common.Infra.MQ.Queues.Abstracts
 
                 try
                 {
-                    await (Task)genericType.GetMethod(handlerName)!.Invoke(handler, new[] { @event })!;
+                    await (Task)genericType.GetMethod(handlerName)!.Invoke(handler, new[] { @event, default })!;
                 }
                 catch (TargetInvocationException ex)
                 {
