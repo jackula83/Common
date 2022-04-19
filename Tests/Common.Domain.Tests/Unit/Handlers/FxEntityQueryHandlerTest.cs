@@ -26,9 +26,7 @@ namespace Common.Domain.UnitTests.Unit.Handlers
         public async Task Handle_DefaultRequestSent_ReturnsEntityCollection()
         {
             // arrange
-            var entity1 = await _repository.Add(new());
-            var entity2 = await _repository.Add(new());
-            await _repository.Save();
+            var (entity1, entity2) = await this.InitialiseRepository();
 
             // act
             var result = await _target.Handle(new());
@@ -43,7 +41,25 @@ namespace Common.Domain.UnitTests.Unit.Handlers
         [Fact]
         public async Task Handle_SpecificRequestSent_ReturnsSpecificEntity()
         {
-            await Task.CompletedTask;
+            // arrange
+            var (entity1, _) = await this.InitialiseRepository();
+
+            // act
+            var result = await _target.Handle(new() { Id = entity1.Id });
+
+            // assert
+            Assert.NotNull(result);
+            Assert.NotNull(result.Item);
+            Assert.True(result.Items?.Count == 1);
+            Assert.Equal(result.Item!.Uuid, entity1.Uuid);
+        }
+
+        private async Task<(EntityStub, EntityStub)> InitialiseRepository()
+        {
+            var entity1 = await _repository.Add(new());
+            var entity2 = await _repository.Add(new());
+            await _repository.Save();
+            return (entity1, entity2);
         }
     }
 }
