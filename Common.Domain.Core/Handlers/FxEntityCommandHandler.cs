@@ -25,9 +25,12 @@ namespace Common.Domain.Core.Handlers
             var result = default(TResponse);
 
             if (command.Item?.Id == 0)
-                result = new TResponse { Success = true, Id = (await this.Add(command.Item, true)).Id };
+                result = new TResponse { Success = true, Item = await this.Add(command.Item, true) };
             else
-                result = new TResponse { Success = await this.Update(command.Item!, true) != default, Id = command.Item?.Id };
+            {
+                var updatedEntity = await this.Update(command.Item!, true);
+                result = new TResponse { Success = updatedEntity != default, Item = updatedEntity };
+            }
 
             return result;
         }

@@ -2,7 +2,7 @@
 {
     public abstract class FxEntityCommandResponse : FxCommandResponse
     {
-        public int? Id { get; set; }
+        public FxEntity? Item { get; set; }
         public bool Success { get; set; } = true;
     }
 }
