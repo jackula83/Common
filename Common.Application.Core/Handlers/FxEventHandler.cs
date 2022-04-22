@@ -1,6 +1,6 @@
 ﻿using Common.Domain.Core.Models;
 
-namespace Common.Domain.Core.Handlers
+namespace Common.Application.Core.Handlers
 {
     public abstract class FxEventHandler
     {

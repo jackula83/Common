@@ -2,7 +2,7 @@
 
 namespace Common.Domain.Tests.Unit.Models.Stubs
 {
-    internal class EntityStub : FxEntity
+    public class EntityStub : FxEntity
     {
     }
 }

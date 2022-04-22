@@ -1,7 +1,7 @@
 ﻿using Common.Domain.Core.Interfaces;
 using Common.Domain.Core.Models;
 
-namespace Common.Domain.Core.Handlers
+namespace Common.Application.Core.Handlers
 {
     public abstract class FxEntityQueryHandler<TRequest, TResponse, TEntity> : FxQueryHandler<TRequest, TResponse>
         where TRequest : FxEntityQueryRequest

@@ -1,4 +1,4 @@
-﻿using Common.Domain.Core.Interfaces;
+﻿using Common.Application.Core.Interfaces;
 using Common.Infra.MQ.Interfaces;
 using Common.Infra.MQ.Queues.Abstracts;
 using Newtonsoft.Json;

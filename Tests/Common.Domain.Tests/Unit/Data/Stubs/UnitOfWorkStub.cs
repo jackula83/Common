@@ -2,7 +2,7 @@
 
 namespace Common.Domain.Tests.Unit.Data.Stubs
 {
-    internal class UnitOfWorkStub : FxUnitOfWork<SqlServerDbContextStub>
+    public class UnitOfWorkStub : FxUnitOfWork<SqlServerDbContextStub>
     {
         public EntityRepositoryStub Repository { get; set; }
 

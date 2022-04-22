@@ -3,7 +3,7 @@ using Common.Domain.Tests.Unit.Models.Stubs;
 
 namespace Common.Domain.UnitTests.Interfaces
 {
-    internal interface IEntityRepositoryStub : IEntityRepository<EntityStub>
+    public interface IEntityRepositoryStub : IEntityRepository<EntityStub>
     {
     }
 }

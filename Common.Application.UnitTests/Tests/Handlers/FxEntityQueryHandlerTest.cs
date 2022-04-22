@@ -1,13 +1,12 @@
-﻿using Common.Domain.Tests.Unit.Data.Stubs;
+﻿using Common.Application.UnitTests.Tests.Handlers.Stubs;
+using Common.Domain.Tests.Unit.Data.Stubs;
 using Common.Domain.Tests.Unit.Models.Stubs;
 using Common.Domain.Tests.Utilities;
-using Common.Domain.UnitTests.Unit.Handlers.Stubs;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Common.Domain.UnitTests.Unit.Handlers
+namespace Common.Application.UnitTests.Tests.Handlers
 {
     public class FxEntityQueryHandlerTest
     {

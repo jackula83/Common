@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Common.Domain.Tests.Unit.Data.Stubs
 {
-    internal class SqlServerDbContextStub : FxSqlServerDbContext
+    public class SqlServerDbContextStub : FxSqlServerDbContext
     {
         public DbSet<EntityStub> Entities { get; set; }
 

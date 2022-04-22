@@ -2,7 +2,7 @@
 
 namespace Common.Domain.UnitTests.Unit.Models.Stubs
 {
-    internal class EntityCommandResponseStub : FxEntityCommandResponse
+    public class EntityCommandResponseStub : FxEntityCommandResponse
     {
     }
 }

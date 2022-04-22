@@ -1,4 +1,4 @@
-﻿using Common.Domain.Core.Handlers;
+﻿using Common.Application.Core.Handlers;
 using System.Threading;
 using System.Threading.Tasks;
 

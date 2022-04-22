@@ -1,17 +1,15 @@
-﻿using Common.Domain.Core.Extensions;
-using Common.Domain.Core.Interfaces;
+﻿using Common.Application.Core.Interfaces;
+using Common.Application.UnitTests.Tests.Handlers.Stubs;
+using Common.Domain.Core.Extensions;
 using Common.Domain.Tests.Unit.Data.Stubs;
-using Common.Domain.Tests.Unit.Models.Stubs;
 using Common.Domain.Tests.Utilities;
-using Common.Domain.UnitTests.Unit.Handlers.Stubs;
 using Common.Domain.UnitTests.Unit.Models.Stubs;
 using Moq;
-using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Common.Domain.UnitTests.Unit.Handlers
+namespace Common.Application.UnitTests.Tests.Handlers
 {
     public class FxEntityCommandHandlerTest
     {

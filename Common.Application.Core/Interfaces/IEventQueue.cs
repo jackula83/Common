@@ -1,7 +1,7 @@
-﻿using Common.Domain.Core.Handlers;
+﻿using Common.Application.Core.Handlers;
 using Common.Domain.Core.Models;
 
-namespace Common.Domain.Core.Interfaces
+namespace Common.Application.Core.Interfaces
 {
     public interface IEventQueue
     {

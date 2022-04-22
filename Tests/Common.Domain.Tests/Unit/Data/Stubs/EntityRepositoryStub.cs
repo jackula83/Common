@@ -4,7 +4,7 @@ using Common.Domain.UnitTests.Interfaces;
 
 namespace Common.Domain.Tests.Unit.Data.Stubs
 {
-    internal class EntityRepositoryStub : FxEntityRepository<SqlServerDbContextStub, EntityStub>, IEntityRepositoryStub
+    public class EntityRepositoryStub : FxEntityRepository<SqlServerDbContextStub, EntityStub>, IEntityRepositoryStub
     {
         public EntityRepositoryStub(SqlServerDbContextStub context) : base(context)
         {

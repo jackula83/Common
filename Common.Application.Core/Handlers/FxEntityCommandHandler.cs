@@ -1,8 +1,9 @@
-﻿using Common.Domain.Core.Extensions;
+﻿using Common.Application.Core.Interfaces;
+using Common.Domain.Core.Extensions;
 using Common.Domain.Core.Interfaces;
 using Common.Domain.Core.Models;
 
-namespace Common.Domain.Core.Handlers
+namespace Common.Application.Core.Handlers
 {
     public abstract class FxEntityCommandHandler<TRequest, TResponse, TEntity> : FxCommandHandler<TRequest, TResponse>
        where TRequest : FxEntityCommandRequest<TEntity>

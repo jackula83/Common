@@ -1,6 +1,6 @@
-﻿using Common.Domain.Core.Interfaces;
+﻿using Common.Application.Core.Interfaces;
 
-namespace Common.Domain.Core.Services
+namespace Common.Application.Core.Utils
 {
     public sealed class FxEnvironment : IEnvironment
     {
