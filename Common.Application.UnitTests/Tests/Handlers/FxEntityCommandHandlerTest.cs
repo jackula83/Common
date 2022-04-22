@@ -4,6 +4,8 @@ using Common.Application.UnitTests.Tests.Models.Stubs;
 using Common.Domain.Core.Extensions;
 using Common.Domain.Tests.Utilities;
 using Common.Domain.UnitTests.Tests.Data.Stubs;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using System;
 using System.Threading.Tasks;
@@ -17,13 +19,15 @@ namespace Common.Application.UnitTests.Tests.Handlers
         private readonly Mock<IUserIdentity> _identityStub;
         private readonly SqlServerDbContextStub _context;
         private readonly EntityRepositoryStub _repository;
+        private readonly ILogger<EntityCommandHandlerStub> _logger;
 
         public FxEntityCommandHandlerTest()
         {
+            _logger = new NullLogger<EntityCommandHandlerStub>();
             _identityStub = new Mock<IUserIdentity>();
             _context = Utils.CreateInMemoryDatabase<SqlServerDbContextStub>(nameof(FxEntityCommandHandlerTest))!;
             _repository = new(_context);
-            _target = new(_identityStub.Object, _repository);
+            _target = new(_identityStub.Object, _logger, _repository);
         }
 
         [Fact]

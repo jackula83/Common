@@ -1,6 +1,7 @@
 ﻿using Common.Application.Core.Models;
 using Common.Domain.Core.Interfaces;
 using Common.Domain.Core.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Common.Application.Core.Handlers
 {
@@ -11,7 +12,10 @@ namespace Common.Application.Core.Handlers
     {
         protected readonly IEntityRepository<TEntity> _repository;
 
-        public FxEntityQueryHandler(IEntityRepository<TEntity> repository)
+        public FxEntityQueryHandler(
+            ILogger<FxEntityQueryHandler<TRequest, TResponse, TEntity>> logger,
+            IEntityRepository<TEntity> repository)
+            : base(logger)
             => _repository = repository;
 
         protected override async Task<TResponse> ExecuteAsync(TRequest request, CancellationToken cancellationToken = default)

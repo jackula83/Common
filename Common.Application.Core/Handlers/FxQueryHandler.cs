@@ -1,4 +1,5 @@
 ﻿using Common.Application.Core.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Common.Application.Core.Handlers
 {
@@ -6,5 +7,8 @@ namespace Common.Application.Core.Handlers
         where TRequest : FxQueryRequest
         where TResponse : FxQueryResponse, new()
     {
+        protected FxQueryHandler(ILogger<FxQueryHandler<TRequest, TResponse>> logger) : base(logger)
+        {
+        }
     }
 }

@@ -2,6 +2,8 @@
 using Common.Domain.Tests.Utilities;
 using Common.Domain.UnitTests.Tests.Data.Stubs;
 using Common.Domain.UnitTests.Tests.Models.Stubs;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -13,12 +15,14 @@ namespace Common.Application.UnitTests.Tests.Handlers
         private readonly EntityQueryHandlerStub _target;
         private readonly SqlServerDbContextStub _context;
         private readonly EntityRepositoryStub _repository;
+        private readonly ILogger<EntityQueryHandlerStub> _logger;
 
         public FxEntityQueryHandlerTest()
         {
+            _logger = new NullLogger<EntityQueryHandlerStub>();
             _context = Utils.CreateInMemoryDatabase<SqlServerDbContextStub>(nameof(FxEntityQueryHandlerTest))!;
             _repository = new(_context);
-            _target = new(_repository);
+            _target = new(_logger, _repository);
         }
 
         [Fact]

@@ -3,6 +3,7 @@ using Common.Application.Core.Models;
 using Common.Domain.Core.Extensions;
 using Common.Domain.Core.Interfaces;
 using Common.Domain.Core.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Common.Application.Core.Handlers
 {
@@ -16,7 +17,11 @@ namespace Common.Application.Core.Handlers
 
         protected abstract bool HasPermission();
 
-        public FxEntityCommandHandler(IUserIdentity identity, IEntityRepository<TEntity> repository)
+        public FxEntityCommandHandler(
+            IUserIdentity identity, 
+            ILogger<FxEntityCommandHandler<TRequest, TResponse, TEntity>> logger,
+            IEntityRepository<TEntity> repository)
+            : base(logger)
         {
             _repository = repository;
             _identity = identity;

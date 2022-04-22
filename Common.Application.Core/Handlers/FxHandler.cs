@@ -1,4 +1,5 @@
 ﻿using Common.Application.Core.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Common.Application.Core.Handlers
 {
@@ -9,6 +10,13 @@ namespace Common.Application.Core.Handlers
     public abstract class FxHandler<TRequest> : FxHandler
         where TRequest : FxRequest
     {
+        protected readonly ILogger<FxHandler<TRequest>> _logger;
+
+        public FxHandler(ILogger<FxHandler<TRequest>> logger)
+        {
+            _logger = logger;
+        }
+
         protected abstract Task ExecuteAsync(TRequest request, CancellationToken cancellationToken = default);
 
         public virtual async Task Handle(TRequest request, CancellationToken cancellationToken = default)
@@ -19,6 +27,13 @@ namespace Common.Application.Core.Handlers
         where TRequest : FxRequest
         where TResponse : FxResponse
     {
+        protected readonly ILogger<FxHandler<TRequest, TResponse>> _logger;
+
+        public FxHandler(ILogger<FxHandler<TRequest, TResponse>> logger)
+        {
+            _logger = logger;
+        }
+
         protected abstract Task<TResponse> ExecuteAsync(TRequest request, CancellationToken cancellationToken = default);
 
         public virtual async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken = default)
