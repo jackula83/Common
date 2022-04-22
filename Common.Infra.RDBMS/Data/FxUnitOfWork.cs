@@ -1,4 +1,6 @@
-﻿namespace Common.Domain.Core.Data
+﻿using Common.Domain.Core.Data;
+
+namespace Common.Infra.RDBMS.Data
 {
     public abstract class FxUnitOfWork<TContext> : IDisposable
         where TContext : FxDbContext
@@ -15,7 +17,7 @@
 
         public virtual void Dispose()
         {
-            lock(_scope)
+            lock (_scope)
             {
                 if (!_disposed)
                     _context.Dispose();

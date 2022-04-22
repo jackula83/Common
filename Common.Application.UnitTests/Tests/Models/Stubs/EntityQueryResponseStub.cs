@@ -1,5 +1,5 @@
 ﻿using Common.Application.Core.Models;
-using Common.Domain.UnitTests.Tests.Models.Stubs;
+using Common.Domain.UnitTests.Models.Stubs;
 
 namespace Common.Application.UnitTests.Tests.Models.Stubs
 {

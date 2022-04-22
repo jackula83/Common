@@ -1,6 +1,6 @@
 ﻿using Common.Domain.Core.Data;
 using Microsoft.EntityFrameworkCore;
-namespace Common.Infra.RDBMS
+namespace Common.Infra.RDBMS.Data
 {
     /// <summary>
     /// DbContext that will work with SQL Server only
@@ -13,7 +13,7 @@ namespace Common.Infra.RDBMS
 
         protected override void Setup<TEntityType>(ModelBuilder builder)
         {
-            builder.Entity<TEntityType>(x => 
+            builder.Entity<TEntityType>(x =>
             {
                 x.Property(p => p.Id)
                     .ValueGeneratedOnAdd()

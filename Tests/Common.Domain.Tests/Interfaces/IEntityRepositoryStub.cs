@@ -1,5 +1,5 @@
 ﻿using Common.Domain.Core.Interfaces;
-using Common.Domain.UnitTests.Tests.Models.Stubs;
+using Common.Domain.UnitTests.Models.Stubs;
 
 namespace Common.Domain.UnitTests.Interfaces
 {

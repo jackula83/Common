@@ -3,7 +3,7 @@ using Common.Application.UnitTests.Tests.Handlers.Stubs;
 using Common.Application.UnitTests.Tests.Models.Stubs;
 using Common.Domain.Core.Extensions;
 using Common.Domain.Tests.Utilities;
-using Common.Domain.UnitTests.Tests.Data.Stubs;
+using Common.Infra.RDBMS.UnitTests.Tests.Data.Stubs;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;

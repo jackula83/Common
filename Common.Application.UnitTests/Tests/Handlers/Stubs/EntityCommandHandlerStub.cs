@@ -2,7 +2,7 @@
 using Common.Application.Core.Interfaces;
 using Common.Application.UnitTests.Tests.Models.Stubs;
 using Common.Domain.UnitTests.Interfaces;
-using Common.Domain.UnitTests.Tests.Models.Stubs;
+using Common.Domain.UnitTests.Models.Stubs;
 using Microsoft.Extensions.Logging;
 
 namespace Common.Application.UnitTests.Tests.Handlers.Stubs
