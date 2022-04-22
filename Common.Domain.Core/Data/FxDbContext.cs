@@ -14,7 +14,7 @@ namespace Common.Domain.Core.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            var propertyTypes = this.GetType().GetProperties()
+            var propertyTypes = GetType().GetProperties()
                .Select(p => p.PropertyType);
 
             var entityTypes = propertyTypes
@@ -23,7 +23,7 @@ namespace Common.Domain.Core.Data
 
             foreach (var entityType in entityTypes ?? Enumerable.Empty<Type>())
             {
-                var setupMethod = this.GetType()
+                var setupMethod = GetType()
                     !.GetMethod(nameof(Setup), BindingFlags.Instance | BindingFlags.NonPublic)
                     !.MakeGenericMethod(new Type[] { entityType! })
                     !.Invoke(this, new object[] { modelBuilder });

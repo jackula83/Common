@@ -1,6 +1,6 @@
-﻿using Common.Domain.Core.Data;
+﻿using Common.Infra.RDBMS.Data;
 
-namespace Common.Domain.UnitTests.Tests.Data.Stubs
+namespace Common.Infra.RDBMS.UnitTests.Tests.Data.Stubs
 {
     public class UnitOfWorkStub : FxUnitOfWork<SqlServerDbContextStub>
     {

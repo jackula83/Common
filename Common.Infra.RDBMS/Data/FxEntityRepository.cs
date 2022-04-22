@@ -1,9 +1,10 @@
-﻿using Common.Domain.Core.Extensions;
+﻿using Common.Domain.Core.Data;
+using Common.Domain.Core.Extensions;
 using Common.Domain.Core.Interfaces;
 using Common.Domain.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Common.Domain.Core.Data
+namespace Common.Infra.RDBMS.Data
 {
     public abstract class FxEntityRepository<TContext, TEntity> : IEntityRepository<TEntity>
        where TContext : FxDbContext
@@ -28,7 +29,7 @@ namespace Common.Domain.Core.Data
         public virtual async Task<List<TEntity>> Enumerate(bool includeDeleted = false)
         {
             var entities = await _context.Set<TEntity>().ToListAsync();
-            var foundEntities = entities.FindAll(x => (includeDeleted || !x.DeleteFlag)).ToList();
+            var foundEntities = entities.FindAll(x => includeDeleted || !x.DeleteFlag).ToList();
             return foundEntities;
         }
 
@@ -37,7 +38,7 @@ namespace Common.Domain.Core.Data
 
         public virtual async Task<TEntity?> Update(TEntity entity)
         {
-            var m = await this.Get(entity.Id);
+            var m = await Get(entity.Id);
             if (m == default)
                 return default;
 
@@ -52,11 +53,11 @@ namespace Common.Domain.Core.Data
 
         public virtual async Task<TEntity?> Delete(int id)
         {
-            var entity = await this.Get(id);
+            var entity = await Get(id);
             if (entity == default)
                 return default;
 
-            return await this.Update(entity
+            return await Update(entity
                 .Tap(x => x.DeleteFlag = true)
                 .Tap(x => x.UpdatedAt = DateTime.UtcNow));
         }
@@ -66,7 +67,7 @@ namespace Common.Domain.Core.Data
             if (entity == default)
                 return default;
 
-            return await this.Delete(entity.Id);
+            return await Delete(entity.Id);
         }
 
         public virtual async Task Save()
