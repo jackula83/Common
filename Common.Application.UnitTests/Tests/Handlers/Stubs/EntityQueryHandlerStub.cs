@@ -1,7 +1,7 @@
 ﻿using Common.Application.Core.Handlers;
-using Common.Domain.Tests.Unit.Models.Stubs;
+using Common.Application.UnitTests.Tests.Models.Stubs;
 using Common.Domain.UnitTests.Interfaces;
-using Common.Domain.UnitTests.Unit.Models.Stubs;
+using Common.Domain.UnitTests.Tests.Models.Stubs;
 
 namespace Common.Application.UnitTests.Tests.Handlers.Stubs
 {

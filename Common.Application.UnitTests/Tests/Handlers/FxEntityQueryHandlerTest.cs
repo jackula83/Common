@@ -1,7 +1,7 @@
 ﻿using Common.Application.UnitTests.Tests.Handlers.Stubs;
-using Common.Domain.Tests.Unit.Data.Stubs;
-using Common.Domain.Tests.Unit.Models.Stubs;
 using Common.Domain.Tests.Utilities;
+using Common.Domain.UnitTests.Tests.Data.Stubs;
+using Common.Domain.UnitTests.Tests.Models.Stubs;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;

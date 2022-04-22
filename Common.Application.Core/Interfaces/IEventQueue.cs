@@ -1,5 +1,5 @@
 ﻿using Common.Application.Core.Handlers;
-using Common.Domain.Core.Models;
+using Common.Application.Core.Models;
 
 namespace Common.Application.Core.Interfaces
 {

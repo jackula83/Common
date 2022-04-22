@@ -1,6 +1,6 @@
 ﻿using Common.Domain.Core.Models;
 
-namespace Common.Domain.Tests.Unit.Models.Stubs
+namespace Common.Domain.UnitTests.Tests.Models.Stubs
 {
     public class EntityStub : FxEntity
     {

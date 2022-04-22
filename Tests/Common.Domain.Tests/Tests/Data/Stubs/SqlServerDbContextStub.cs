@@ -1,8 +1,8 @@
-﻿using Common.Domain.Tests.Unit.Models.Stubs;
+﻿using Common.Domain.UnitTests.Tests.Models.Stubs;
 using Common.Infra.RDBMS;
 using Microsoft.EntityFrameworkCore;
 
-namespace Common.Domain.Tests.Unit.Data.Stubs
+namespace Common.Domain.UnitTests.Tests.Data.Stubs
 {
     public class SqlServerDbContextStub : FxSqlServerDbContext
     {

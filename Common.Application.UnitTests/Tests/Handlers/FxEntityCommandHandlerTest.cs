@@ -1,9 +1,9 @@
 ﻿using Common.Application.Core.Interfaces;
 using Common.Application.UnitTests.Tests.Handlers.Stubs;
+using Common.Application.UnitTests.Tests.Models.Stubs;
 using Common.Domain.Core.Extensions;
-using Common.Domain.Tests.Unit.Data.Stubs;
 using Common.Domain.Tests.Utilities;
-using Common.Domain.UnitTests.Unit.Models.Stubs;
+using Common.Domain.UnitTests.Tests.Data.Stubs;
 using Moq;
 using System;
 using System.Threading.Tasks;

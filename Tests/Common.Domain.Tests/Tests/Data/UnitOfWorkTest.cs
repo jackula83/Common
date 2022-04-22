@@ -1,11 +1,11 @@
-﻿using Common.Domain.Tests.Unit.Data.Stubs;
-using Common.Domain.Tests.Unit.Models.Stubs;
-using Common.Domain.Tests.Utilities;
+﻿using Common.Domain.Tests.Utilities;
+using Common.Domain.UnitTests.Tests.Data.Stubs;
+using Common.Domain.UnitTests.Tests.Models.Stubs;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Common.Domain.Tests.Unit.Data
+namespace Common.Domain.UnitTests.Tests.Data
 {
     public class UnitOfWorkStubTest
     {

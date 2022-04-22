@@ -1,6 +1,6 @@
-﻿using Common.Domain.Core.Models;
+﻿using Common.Application.Core.Models;
 
-namespace Common.Domain.UnitTests.Unit.Models.Stubs
+namespace Common.Application.UnitTests.Tests.Models.Stubs
 {
     public class EntityQueryRequestStub : FxEntityQueryRequest
     {

@@ -1,4 +1,5 @@
-﻿using Common.Domain.Core.Interfaces;
+﻿using Common.Application.Core.Models;
+using Common.Domain.Core.Interfaces;
 using Common.Domain.Core.Models;
 
 namespace Common.Application.Core.Handlers

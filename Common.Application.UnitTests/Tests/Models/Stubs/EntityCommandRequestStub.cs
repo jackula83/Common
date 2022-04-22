@@ -1,7 +1,7 @@
-﻿using Common.Domain.Core.Models;
-using Common.Domain.Tests.Unit.Models.Stubs;
+﻿using Common.Application.Core.Models;
+using Common.Domain.UnitTests.Tests.Models.Stubs;
 
-namespace Common.Domain.UnitTests.Unit.Models.Stubs
+namespace Common.Application.UnitTests.Tests.Models.Stubs
 {
     public class EntityCommandRequestStub : FxEntityCommandRequest<EntityStub>
     {

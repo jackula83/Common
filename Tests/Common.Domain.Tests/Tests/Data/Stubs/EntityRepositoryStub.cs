@@ -1,8 +1,8 @@
 ﻿using Common.Domain.Core.Data;
-using Common.Domain.Tests.Unit.Models.Stubs;
 using Common.Domain.UnitTests.Interfaces;
+using Common.Domain.UnitTests.Tests.Models.Stubs;
 
-namespace Common.Domain.Tests.Unit.Data.Stubs
+namespace Common.Domain.UnitTests.Tests.Data.Stubs
 {
     public class EntityRepositoryStub : FxEntityRepository<SqlServerDbContextStub, EntityStub>, IEntityRepositoryStub
     {
