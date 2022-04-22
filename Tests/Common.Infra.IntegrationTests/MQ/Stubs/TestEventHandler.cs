@@ -1,11 +1,10 @@
-﻿using Common.Domain.Core.Handlers;
-using Common.Domain.Core.Interfaces;
-using System;
+﻿using Common.Application.Core.Handlers;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Common.Infra.IntegrationTests.MQ.Stubs
 {
-    public sealed class TestEventHandler : FxEventHandler<TestEvent>, IEventHandler
+    public sealed class TestEventHandler : FxEventHandler<TestEvent>
     {
         private readonly ITestEventMonitor _testEventMonitor;
 
@@ -14,7 +13,7 @@ namespace Common.Infra.IntegrationTests.MQ.Stubs
             _testEventMonitor = eventMonitor;
         }
 
-        public override async Task Handle(TestEvent @event)
+        public override async Task Handle(TestEvent @event, CancellationToken cancellationToken = default)
         {
             await Task.CompletedTask;
             _testEventMonitor.EventMonitored(@event.CorrelationId);

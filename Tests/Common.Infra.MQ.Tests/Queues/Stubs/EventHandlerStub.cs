@@ -1,13 +1,12 @@
-﻿using Common.Domain.Core.Handlers;
-using Common.Domain.Core.Interfaces;
-using System;
+﻿using Common.Application.Core.Handlers;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Common.Infra.MQ.Tests.Queues.Stubs
 {
-    public sealed class EventHandlerStub : FxEventHandler<EventStub>, IEventHandler
+    public sealed class EventHandlerStub : FxEventHandler<EventStub>
     {
-        public override Task Handle(EventStub @event)
+        public override Task Handle(EventStub @event, CancellationToken cancellationToken = default)
         {
             throw new EventExceptionStub();
         }

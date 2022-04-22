@@ -1,4 +1,5 @@
-﻿using Common.Domain.Core.Interfaces;
+﻿using Common.Application.Core.Interfaces;
+using Common.Domain.Core.Interfaces;
 using Common.Infra.MQ.Environment;
 using Common.Infra.MQ.Interfaces;
 using RabbitMQ.Client;
