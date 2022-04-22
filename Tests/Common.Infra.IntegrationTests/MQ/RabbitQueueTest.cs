@@ -1,5 +1,4 @@
-﻿using Common.Domain.Core.Interfaces;
-using Common.Domain.Core.Models;
+﻿using Common.Application.Core.Interfaces;
 using Common.Domain.Tests.Utilities;
 using Common.Infra.IntegrationTests.Fixtures;
 using Common.Infra.IntegrationTests.MQ.Stubs;
