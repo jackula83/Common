@@ -1,1 +1,5 @@
-Common tools that I use on public and private projects
+Framework containing abstract boilerplates that I use on my public and private projects.
+
+- Developed using DDD principles
+- Full suite of tests under Tests/
+- Work is ongoing
