@@ -36,7 +36,7 @@ namespace Common.Application.Core.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, String.Empty);
+                _logger.LogError(ex, nameof(FxController));
             }
 
             return StatusCode((int) HttpStatusCode.InternalServerError);
