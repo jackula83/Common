@@ -1,6 +1,6 @@
-﻿using Common.Application.Core.Models;
-using Common.Domain.Core.Extensions;
+﻿using Common.Domain.Core.Extensions;
 using Common.Domain.Core.Models;
+using Common.Domain.Core.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -34,7 +34,7 @@ namespace Common.Application.Core.Controllers
         {
             if (request.Item == null)
             {
-                _logger.LogError(new ArgumentNullException(nameof(request)), default);
+                _logger.LogError(new ArgumentNullException(nameof(request)), nameof(FxEntityController<TQueryRequest, TCommandRequest, TEntity>));
                 return BadRequest();
             }
 

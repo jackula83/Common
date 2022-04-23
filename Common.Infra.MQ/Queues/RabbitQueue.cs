@@ -1,4 +1,5 @@
 ﻿using Common.Application.Core.Interfaces;
+using Common.Domain.Core.Interfaces;
 using Common.Infra.MQ.Interfaces;
 using Common.Infra.MQ.Queues.Abstracts;
 using Newtonsoft.Json;
@@ -11,10 +12,10 @@ namespace Common.Infra.MQ.Queues
     public sealed class RabbitQueue : FxEventQueue, IEventQueue
     {
         private readonly IConnectionFactoryCreator _connectionCreator;
-        private IConnection _connection;
-        private IModel _channel;
+        private readonly IConnection _connection;
+        private readonly IModel _channel;
 
-        private static string DefaultExchange = string.Empty;
+        private static readonly string DefaultExchange = string.Empty;
 
         public RabbitQueue(IServiceProvider serviceProvider, IConnectionFactoryCreator creator) 
             : base(serviceProvider)
@@ -31,7 +32,7 @@ namespace Common.Infra.MQ.Queues
             using var connection = _connectionCreator.CreateConnection();
             using var channel = connection.CreateModel();
 
-            this.QueueDeclare(channel, @event.Name);
+            QueueDeclare(channel, @event.Name);
 
             var payload = JsonConvert.SerializeObject(@event);
             var body = Encoding.UTF8.GetBytes(payload);
@@ -51,7 +52,7 @@ namespace Common.Infra.MQ.Queues
         {
             await Task.CompletedTask;
 
-            this.QueueDeclare(_channel!, eventName);
+            QueueDeclare(_channel!, eventName);
 
             var consumer = new AsyncEventingBasicConsumer(_channel);
             consumer.Received += OnConsumerReceived;
@@ -69,7 +70,7 @@ namespace Common.Infra.MQ.Queues
             _channel.BasicAck(@event.DeliveryTag, false);
         }
 
-        private QueueDeclareOk QueueDeclare(IModel clientModel, string eventName)
+        private static QueueDeclareOk QueueDeclare(IModel clientModel, string eventName)
             => clientModel.QueueDeclare(eventName, false, false, false, null);
     }
 }

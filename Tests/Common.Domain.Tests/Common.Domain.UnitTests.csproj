@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common.Domain.Core\Common.Domain.Core.csproj" />
-    <ProjectReference Include="..\..\Common.Infra.RDBMS\Common.Infra.RDBMS.csproj" />
   </ItemGroup>
 
 </Project>

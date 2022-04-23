@@ -23,7 +23,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Common.Application.Core\Common.Application.Core.csproj" />
     <ProjectReference Include="..\Common.Domain.Tests\Common.Domain.UnitTests.csproj" />
-    <ProjectReference Include="..\Common.Infra.RDBMS.UnitTests\Common.Infra.RDBMS.UnitTests.csproj" />
   </ItemGroup>
 
 </Project>
