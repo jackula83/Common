@@ -1,4 +1,4 @@
-﻿using Common.Application.Core.Models;
+﻿using Common.Domain.Core.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;

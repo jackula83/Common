@@ -1,6 +1,6 @@
 ﻿using Common.Application.UnitTests.Tests.Controllers.Stubs;
-using Common.Application.UnitTests.Tests.Models.Stubs;
 using Common.Domain.Core.Extensions;
+using Common.Domain.UnitTests.Models.Stubs;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;

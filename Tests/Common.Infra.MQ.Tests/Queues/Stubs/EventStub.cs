@@ -1,4 +1,4 @@
-﻿using Common.Application.Core.Models;
+﻿using Common.Domain.Core.Events;
 
 namespace Common.Infra.MQ.Tests.Queues.Stubs
 {

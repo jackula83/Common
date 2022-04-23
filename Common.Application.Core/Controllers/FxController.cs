@@ -1,4 +1,4 @@
-﻿using Common.Application.Core.Models;
+﻿using Common.Domain.Core.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -36,7 +36,7 @@ namespace Common.Application.Core.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, default);
+                _logger.LogError(ex, String.Empty);
             }
 
             return StatusCode((int) HttpStatusCode.InternalServerError);

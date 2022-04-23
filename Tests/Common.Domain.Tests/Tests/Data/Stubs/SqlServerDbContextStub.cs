@@ -2,7 +2,7 @@
 using Common.Domain.UnitTests.Models.Stubs;
 using Microsoft.EntityFrameworkCore;
 
-namespace Common.Infra.RDBMS.UnitTests.Tests.Data.Stubs
+namespace Common.Domain.UnitTests.Tests.Data.Stubs
 {
     public class SqlServerDbContextStub : FxSqlServerDbContext
     {

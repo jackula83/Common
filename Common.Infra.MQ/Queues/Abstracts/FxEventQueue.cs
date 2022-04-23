@@ -1,6 +1,7 @@
-﻿using Common.Application.Core.Handlers;
-using Common.Application.Core.Interfaces;
-using Common.Application.Core.Models;
+﻿using Common.Application.Core.Interfaces;
+using Common.Domain.Core.Events;
+using Common.Domain.Core.Handlers;
+using Common.Domain.Core.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Reflection;
