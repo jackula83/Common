@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Common.Domain.Core.Models;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace Common.Domain.Core.Models
+namespace Common.Domain.Core.Data
 {
     [Index(nameof(Uuid), Name = "idx_uuid")]
     [Index(nameof(DeleteFlag), Name = "idx_deleteFlag")]

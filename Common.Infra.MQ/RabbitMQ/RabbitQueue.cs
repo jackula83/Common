@@ -1,15 +1,14 @@
-﻿using Common.Application.Core.Interfaces;
-using Common.Domain.Core.Interfaces;
-using Common.Infra.MQ.Interfaces;
-using Common.Infra.MQ.Queues.Abstracts;
+﻿using Common.Domain.Core.Events;
+using Common.Infra.MQ.Core;
+using Common.Infra.MQ.RabbitMQ.Connection;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 
-namespace Common.Infra.MQ.Queues
+namespace Common.Infra.MQ.RabbitMQ
 {
-    public sealed class RabbitQueue : FxEventQueue, IEventQueue
+    public sealed class RabbitQueue : EventQueue, IEventQueue
     {
         private readonly IConnectionFactoryCreator _connectionCreator;
         private readonly IConnection _connection;
@@ -17,7 +16,7 @@ namespace Common.Infra.MQ.Queues
 
         private static readonly string DefaultExchange = string.Empty;
 
-        public RabbitQueue(IServiceProvider serviceProvider, IConnectionFactoryCreator creator) 
+        public RabbitQueue(IServiceProvider serviceProvider, IConnectionFactoryCreator creator)
             : base(serviceProvider)
         {
             _connectionCreator = creator;
@@ -66,7 +65,7 @@ namespace Common.Infra.MQ.Queues
             var eventName = @event.RoutingKey;
             var payload = Encoding.UTF8.GetString(@event.Body.Span);
 
-            await this.ConsumeEvent(eventName, payload);
+            await ConsumeEvent(eventName, payload);
             _channel.BasicAck(@event.DeliveryTag, false);
         }
 

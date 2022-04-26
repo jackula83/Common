@@ -1,5 +1,5 @@
-﻿using Common.Domain.Core.Extensions;
-using Common.Domain.Core.Models;
+﻿using Common.Domain.Core.Data;
+using Common.Domain.Core.Extensions;
 using Common.Domain.Core.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

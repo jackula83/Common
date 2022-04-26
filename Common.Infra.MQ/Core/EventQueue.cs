@@ -1,17 +1,15 @@
-﻿using Common.Application.Core.Interfaces;
-using Common.Domain.Core.Events;
+﻿using Common.Domain.Core.Events;
 using Common.Domain.Core.Handlers;
-using Common.Domain.Core.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Reflection;
 
-namespace Common.Infra.MQ.Queues.Abstracts
+namespace Common.Infra.MQ.Core
 {
     /// <summary>
     /// The base event queue, derived services should have a singleton scope
     /// </summary>
-    public abstract class FxEventQueue : IEventQueue
+    public abstract class EventQueue : IEventQueue
     {
         protected readonly IServiceProvider _serviceProvider;
 
@@ -26,7 +24,7 @@ namespace Common.Infra.MQ.Queues.Abstracts
         protected abstract Task StartConsumingEvents<TEvent>(string eventName)
             where TEvent : FxEvent;
 
-        public FxEventQueue(IServiceProvider serviceProvider)
+        public EventQueue(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             _eventHandlers = new();

@@ -1,10 +1,7 @@
-﻿using Common.Application.Core.Interfaces;
-using Common.Domain.Core.Interfaces;
-using Common.Infra.MQ.Environment;
-using Common.Infra.MQ.Interfaces;
+﻿using Common.Application.Core.Env;
 using RabbitMQ.Client;
 
-namespace Common.Infra.MQ.Services
+namespace Common.Infra.MQ.RabbitMQ.Connection
 {
     public sealed class ConnectionFactoryCreator : IConnectionFactoryCreator
     {

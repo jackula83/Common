@@ -1,5 +1,4 @@
-﻿using Common.Domain.Core.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace Common.Domain.Core.Data

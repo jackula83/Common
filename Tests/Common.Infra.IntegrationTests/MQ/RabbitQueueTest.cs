@@ -1,12 +1,10 @@
-﻿using Common.Application.Core.Interfaces;
-using Common.Domain.Core.Interfaces;
+﻿using Common.Application.Core.Env;
+using Common.Domain.Core.Events;
 using Common.Domain.Tests.Utilities;
 using Common.Infra.IntegrationTests.Fixtures;
 using Common.Infra.IntegrationTests.MQ.Stubs;
-using Common.Infra.MQ.Environment;
-using Common.Infra.MQ.Interfaces;
-using Common.Infra.MQ.Queues;
-using Common.Infra.MQ.Services;
+using Common.Infra.MQ.RabbitMQ;
+using Common.Infra.MQ.RabbitMQ.Connection;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System;

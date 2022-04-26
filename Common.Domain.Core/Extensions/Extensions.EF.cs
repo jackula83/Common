@@ -1,5 +1,4 @@
 ﻿using Common.Domain.Core.Data;
-using Common.Domain.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Common.Domain.Core.Extensions
