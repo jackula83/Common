@@ -1,4 +1,4 @@
-﻿namespace Common.Domain.Core.Interfaces
+﻿namespace Common.Domain.Core.Identity
 {
     public interface IUserIdentity
     {

@@ -1,4 +1,4 @@
-﻿namespace Common.Application.Core.Interfaces
+﻿namespace Common.Application.Core.Env
 {
     public interface IEnvironment
     {

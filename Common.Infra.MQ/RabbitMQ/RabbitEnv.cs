@@ -1,8 +1,8 @@
-﻿using Common.Infra.MQ.Environment.Abstracts;
+﻿using Common.Infra.MQ.Core;
 
-namespace Common.Infra.MQ.Environment
+namespace Common.Infra.MQ.RabbitMQ
 {
-    public sealed class RabbitEnv : EnvVars
+    public sealed class RabbitEnv : Env
     {
         private static string Prefix => "Rabbit_Mq";
 

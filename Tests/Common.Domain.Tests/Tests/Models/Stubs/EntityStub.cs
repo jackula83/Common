@@ -1,4 +1,4 @@
-﻿using Common.Domain.Core.Models;
+﻿using Common.Domain.Core.Data;
 
 namespace Common.Domain.UnitTests.Models.Stubs
 {

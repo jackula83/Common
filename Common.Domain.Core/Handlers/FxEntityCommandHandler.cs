@@ -1,6 +1,6 @@
-﻿using Common.Domain.Core.Extensions;
-using Common.Domain.Core.Interfaces;
-using Common.Domain.Core.Models;
+﻿using Common.Domain.Core.Data;
+using Common.Domain.Core.Extensions;
+using Common.Domain.Core.Identity;
 using Common.Domain.Core.Requests;
 using Common.Domain.Core.Responses;
 using Microsoft.Extensions.Logging;
@@ -29,7 +29,9 @@ public abstract class FxEntityCommandHandler<TRequest, TResponse, TEntity> : FxC
 
     protected override async Task<TResponse> ExecuteAsync(TRequest command, CancellationToken cancellationToken = default)
     {
+#pragma warning disable IDE0059
         var result = default(TResponse);
+#pragma warning restore IDE0059
 
         if (command.Item?.Id == 0)
             result = new TResponse { Success = true, Item = await Add(command.Item, true) };

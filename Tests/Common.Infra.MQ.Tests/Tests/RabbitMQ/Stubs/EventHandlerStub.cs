@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Common.Infra.MQ.Tests.Queues.Stubs
+namespace Common.Infra.MQ.UnitTests.Tests.RabbitMQ.Stubs
 {
     public sealed class EventHandlerStub : FxEventHandler<EventStub>
     {

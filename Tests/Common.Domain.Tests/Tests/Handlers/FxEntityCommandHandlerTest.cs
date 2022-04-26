@@ -1,5 +1,5 @@
 ﻿using Common.Domain.Core.Extensions;
-using Common.Domain.Core.Interfaces;
+using Common.Domain.Core.Identity;
 using Common.Domain.Tests.Utilities;
 using Common.Domain.UnitTests.Handlers.Stubs;
 using Common.Domain.UnitTests.Models.Stubs;

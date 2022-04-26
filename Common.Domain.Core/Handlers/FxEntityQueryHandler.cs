@@ -1,5 +1,4 @@
-﻿using Common.Domain.Core.Interfaces;
-using Common.Domain.Core.Models;
+﻿using Common.Domain.Core.Data;
 using Common.Domain.Core.Requests;
 using Common.Domain.Core.Responses;
 using Microsoft.Extensions.Logging;

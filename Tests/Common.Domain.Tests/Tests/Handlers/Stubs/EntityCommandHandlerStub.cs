@@ -1,7 +1,7 @@
 ﻿using Common.Domain.Core.Handlers;
-using Common.Domain.Core.Interfaces;
-using Common.Domain.UnitTests.Interfaces;
+using Common.Domain.Core.Identity;
 using Common.Domain.UnitTests.Models.Stubs;
+using Common.Domain.UnitTests.Tests.Data.Stubs;
 using Microsoft.Extensions.Logging;
 
 namespace Common.Domain.UnitTests.Handlers.Stubs

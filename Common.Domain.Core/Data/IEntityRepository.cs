@@ -1,5 +1,4 @@
-﻿using Common.Domain.Core.Models;
-namespace Common.Domain.Core.Interfaces
+﻿namespace Common.Domain.Core.Data
 {
     public interface IEntityRepository
     {

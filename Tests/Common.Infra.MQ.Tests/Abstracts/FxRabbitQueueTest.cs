@@ -1,9 +1,6 @@
-﻿using Common.Domain.Core.Extensions;
-using Common.Domain.Core.Interfaces;
-using Common.Infra.MQ.Environment;
-using Common.Infra.MQ.Interfaces;
-using Common.Infra.MQ.Queues;
-using Common.Infra.MQ.Tests.Queues.Stubs;
+﻿using Common.Infra.MQ.RabbitMQ;
+using Common.Infra.MQ.RabbitMQ.Connection;
+using Common.Infra.MQ.UnitTests.Tests.RabbitMQ.Stubs;
 using Moq;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
