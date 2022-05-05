@@ -22,9 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Framework2.Application.Core\Framework2.Application.csproj" />
-    <ProjectReference Include="..\..\Framework2.Infra.Data.UnitTests\Framework2.Infra.Data.UnitTests.csproj" />
+    <ProjectReference Include="..\..\src\Framework2.Application\Framework2.Application.csproj" />
     <ProjectReference Include="..\Framework2.Domain.Tests\Framework2.Domain.UnitTests.csproj" />
+    <ProjectReference Include="..\Framework2.Infra.Data.UnitTests\Framework2.Infra.Data.UnitTests.csproj" />
   </ItemGroup>
 
 </Project>

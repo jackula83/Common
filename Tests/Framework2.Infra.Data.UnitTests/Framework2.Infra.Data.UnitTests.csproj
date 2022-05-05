@@ -22,9 +22,9 @@
 		</PackageReference>
 	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Framework2.Infra.Data\Framework2.Infra.Data.csproj" />
-    <ProjectReference Include="..\Framework2.Tests.Core\Framework2.Tests.Core.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\Framework2.Infra.Data\Framework2.Infra.Data.csproj" />
+	  <ProjectReference Include="..\Framework2.Tests.Core\Framework2.Tests.Core.csproj" />
+	</ItemGroup>
 
 </Project>
