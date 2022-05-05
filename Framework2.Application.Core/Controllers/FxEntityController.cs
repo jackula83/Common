@@ -1,18 +1,18 @@
-﻿using Framework2.Domain.Core.Data;
-using Framework2.Domain.Core.Extensions;
+﻿using Framework2.Core.Extensions;
 using Framework2.Domain.Core.Requests;
+using Framework2.Infra.Data.Entity;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Framework2.Application.Core.Controllers
 {
-    public abstract class FxEntityController<TQueryRequest, TCommandRequest, TEntity> : FxController
+    public abstract class FxEntityController<TQueryRequest, TCommandRequest, TDataObject> : FxController
         where TQueryRequest : FxEntityQueryRequest, new()
-        where TCommandRequest : FxEntityCommandRequest<TEntity>, new()
-        where TEntity : FxEntity
+        where TCommandRequest : FxEntityCommandRequest<TDataObject>, new()
+        where TDataObject : IDataObject
     {
-        protected FxEntityController(IMediator mediator, ILogger<FxEntityController<TQueryRequest, TCommandRequest, TEntity>> logger)
+        protected FxEntityController(IMediator mediator, ILogger<FxEntityController<TQueryRequest, TCommandRequest, TDataObject>> logger)
             : base(mediator, logger)
         {
         }
@@ -34,7 +34,7 @@ namespace Framework2.Application.Core.Controllers
         {
             if (request.Item == null)
             {
-                _logger.LogError(new ArgumentNullException(nameof(request)), nameof(FxEntityController<TQueryRequest, TCommandRequest, TEntity>));
+                _logger.LogError(new ArgumentNullException(nameof(request)), nameof(FxEntityController<TQueryRequest, TCommandRequest, TDataObject>));
                 return BadRequest();
             }
 

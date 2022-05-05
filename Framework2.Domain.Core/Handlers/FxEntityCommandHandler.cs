@@ -1,26 +1,27 @@
-﻿using Framework2.Domain.Core.Data;
-using Framework2.Domain.Core.Extensions;
+﻿using Framework2.Core.Extensions;
 using Framework2.Domain.Core.Identity;
 using Framework2.Domain.Core.Requests;
 using Framework2.Domain.Core.Responses;
+using Framework2.Infra.Data.Entity;
+using Framework2.Infra.Data.Repository;
 using Microsoft.Extensions.Logging;
 
 namespace Framework2.Domain.Core.Handlers;
 
-public abstract class FxEntityCommandHandler<TRequest, TResponse, TEntity> : FxCommandHandler<TRequest, TResponse>
-   where TRequest : FxEntityCommandRequest<TEntity>
+public abstract class FxEntityCommandHandler<TRequest, TResponse, TDataObject> : FxCommandHandler<TRequest, TResponse>
+   where TRequest : FxEntityCommandRequest<TDataObject>
    where TResponse : FxEntityCommandResponse, new()
-   where TEntity : FxEntity
+   where TDataObject : class, IDataObject
 {
-    protected readonly IEntityRepository<TEntity> _repository;
+    protected readonly IEntityRepository<TDataObject> _repository;
     protected readonly IUserIdentity _identity;
 
     protected abstract bool HasPermission();
 
     public FxEntityCommandHandler(
         IUserIdentity identity,
-        ILogger<FxEntityCommandHandler<TRequest, TResponse, TEntity>> logger,
-        IEntityRepository<TEntity> repository)
+        ILogger<FxEntityCommandHandler<TRequest, TResponse, TDataObject>> logger,
+        IEntityRepository<TDataObject> repository)
         : base(logger)
     {
         _repository = repository;
@@ -44,7 +45,7 @@ public abstract class FxEntityCommandHandler<TRequest, TResponse, TEntity> : FxC
         return result;
     }
 
-    protected virtual async Task<TEntity> Add(TEntity entity, bool commitImmediately = false)
+    protected virtual async Task<TDataObject> Add(TDataObject entity, bool commitImmediately = false)
     {
         if (!HasPermission())
             throw new UnauthorizedAccessException();
@@ -61,7 +62,7 @@ public abstract class FxEntityCommandHandler<TRequest, TResponse, TEntity> : FxC
 
     }
 
-    protected virtual async Task<TEntity?> Update(TEntity model, bool commitImmediately = false)
+    protected virtual async Task<TDataObject?> Update(TDataObject model, bool commitImmediately = false)
     {
         if (!HasPermission())
             throw new UnauthorizedAccessException();

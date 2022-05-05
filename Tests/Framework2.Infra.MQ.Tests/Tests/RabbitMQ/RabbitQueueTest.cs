@@ -1,6 +1,6 @@
-﻿using Framework2.Domain.Tests.Utilities;
-using Framework2.Infra.MQ.Tests.Abstracts;
+﻿using Framework2.Infra.MQ.Tests.Abstracts;
 using Framework2.Infra.MQ.UnitTests.Tests.RabbitMQ.Stubs;
+using Framework2.Tests.Core.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 

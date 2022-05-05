@@ -1,7 +1,7 @@
-﻿using Framework2.Domain.Tests.Utilities;
-using Framework2.Domain.UnitTests.Handlers.Stubs;
-using Framework2.Domain.UnitTests.Models.Stubs;
-using Framework2.Domain.UnitTests.Tests.Data.Stubs;
+﻿using Framework2.Domain.UnitTests.Handlers.Stubs;
+using Framework2.Infra.Data.UnitTests.Tests.Data.Stubs;
+using Framework2.Infra.Data.UnitTests.Tests.Models.Stubs;
+using Framework2.Infra.Data.UnitTests.Utilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using System.Linq;
