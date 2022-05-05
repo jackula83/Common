@@ -4,11 +4,11 @@ namespace Framework2.Domain.Core.Responses
 {
     public abstract class FxEntityQueryResponse : FxQueryResponse { }
 
-    public abstract class FxEntityQueryResponse<TDataObject> : FxEntityQueryResponse
-        where TDataObject : class, IDataObject
+    public abstract class FxEntityQueryResponse<TAggregateRoot> : FxEntityQueryResponse
+        where TAggregateRoot : class, IAggregateRoot
     {
-        public List<TDataObject> Items { get; set; } = new();
+        public List<TAggregateRoot> Items { get; set; } = new();
 
-        public TDataObject? Item => Items?.FirstOrDefault();
+        public TAggregateRoot? Item => Items?.FirstOrDefault();
     }
 }

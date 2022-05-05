@@ -6,15 +6,15 @@ namespace Framework2.Infra.Data.Repository
     {
     }
 
-    public interface IEntityRepository<TDataObject> : IRepository
-        where TDataObject : IDataObject
+    public interface IEntityRepository<TAggregateRoot> : IRepository
+        where TAggregateRoot : IAggregateRoot
     {
-        Task<TDataObject> Add(TDataObject entity);
-        Task<List<TDataObject>> Enumerate(bool includeDeleted = false);
-        Task<TDataObject?> Get(int id);
-        Task<TDataObject?> Update(TDataObject entity);
-        Task<TDataObject?> Delete(int id);
-        Task<TDataObject?> Delete(TDataObject entity);
+        Task<TAggregateRoot> Add(TAggregateRoot entity);
+        Task<List<TAggregateRoot>> Enumerate(bool includeDeleted = false);
+        Task<TAggregateRoot?> Get(int id);
+        Task<TAggregateRoot?> Update(TAggregateRoot entity);
+        Task<TAggregateRoot?> Delete(int id);
+        Task<TAggregateRoot?> Delete(TAggregateRoot entity);
         Task Save();
     }
 }

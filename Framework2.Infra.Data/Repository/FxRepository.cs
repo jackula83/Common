@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Framework2.Infra.Data.Repository
 {
-    public abstract class FxRepository<TContext, TDataObject> : IEntityRepository<TDataObject>
+    public abstract class FxRepository<TContext, TAggregateRoot> : IEntityRepository<TAggregateRoot>
        where TContext : FxDbContext
-       where TDataObject : class, IDataObject
+       where TAggregateRoot : class, IAggregateRoot
     {
         protected readonly TContext _context;
 
@@ -17,7 +17,7 @@ namespace Framework2.Infra.Data.Repository
             _context = context;
         }
 
-        public virtual async Task<TDataObject> Add(TDataObject entity)
+        public virtual async Task<TAggregateRoot> Add(TAggregateRoot entity)
         {
             var copy = entity.Copy();
             await _context.AddAsync(copy
@@ -26,17 +26,17 @@ namespace Framework2.Infra.Data.Repository
             return copy;
         }
 
-        public virtual async Task<List<TDataObject>> Enumerate(bool includeDeleted = false)
+        public virtual async Task<List<TAggregateRoot>> Enumerate(bool includeDeleted = false)
         {
-            var entities = await _context.Set<TDataObject>().ToListAsync();
+            var entities = await _context.Set<TAggregateRoot>().ToListAsync();
             var foundEntities = entities.FindAll(x => includeDeleted || !x.DeleteFlag).ToList();
             return foundEntities;
         }
 
-        public virtual async Task<TDataObject?> Get(int id)
-            => await _context.Set<TDataObject>().FindAsync(id);
+        public virtual async Task<TAggregateRoot?> Get(int id)
+            => await _context.Set<TAggregateRoot>().FindAsync(id);
 
-        public virtual async Task<TDataObject?> Update(TDataObject entity)
+        public virtual async Task<TAggregateRoot?> Update(TAggregateRoot entity)
         {
             var m = await Get(entity.Id);
             if (m == default)
@@ -51,7 +51,7 @@ namespace Framework2.Infra.Data.Repository
             return copy;
         }
 
-        public virtual async Task<TDataObject?> Delete(int id)
+        public virtual async Task<TAggregateRoot?> Delete(int id)
         {
             var entity = await Get(id);
             if (entity == default)
@@ -62,7 +62,7 @@ namespace Framework2.Infra.Data.Repository
                 .Tap(x => x.UpdatedAt = DateTime.UtcNow));
         }
 
-        public virtual async Task<TDataObject?> Delete(TDataObject entity)
+        public virtual async Task<TAggregateRoot?> Delete(TAggregateRoot entity)
         {
             if (entity == default)
                 return default;

@@ -2,7 +2,7 @@
 
 namespace Framework2.Infra.Data.UnitTests.Tests.Models.Stubs
 {
-    public class EntityStub : FxDataObject, IEntity
+    public class EntityStub : FxDataObject, IAggregateRoot
     {
     }
 }

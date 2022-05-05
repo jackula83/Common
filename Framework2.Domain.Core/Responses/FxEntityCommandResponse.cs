@@ -4,7 +4,7 @@ namespace Framework2.Domain.Core.Responses
 {
     public abstract class FxEntityCommandResponse : FxCommandResponse
     {
-        public IDataObject? Item { get; set; }
+        public IAggregateRoot? Item { get; set; }
         public bool Success { get; set; } = true;
     }
 }

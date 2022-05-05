@@ -8,20 +8,20 @@ using Microsoft.Extensions.Logging;
 
 namespace Framework2.Domain.Core.Handlers;
 
-public abstract class FxEntityCommandHandler<TRequest, TResponse, TDataObject> : FxCommandHandler<TRequest, TResponse>
-   where TRequest : FxEntityCommandRequest<TDataObject>
+public abstract class FxEntityCommandHandler<TRequest, TResponse, TAggregateRoot> : FxCommandHandler<TRequest, TResponse>
+   where TRequest : FxEntityCommandRequest<TAggregateRoot>
    where TResponse : FxEntityCommandResponse, new()
-   where TDataObject : class, IDataObject
+   where TAggregateRoot : class, IAggregateRoot
 {
-    protected readonly IEntityRepository<TDataObject> _repository;
+    protected readonly IEntityRepository<TAggregateRoot> _repository;
     protected readonly IUserIdentity _identity;
 
     protected abstract bool HasPermission();
 
     public FxEntityCommandHandler(
         IUserIdentity identity,
-        ILogger<FxEntityCommandHandler<TRequest, TResponse, TDataObject>> logger,
-        IEntityRepository<TDataObject> repository)
+        ILogger<FxEntityCommandHandler<TRequest, TResponse, TAggregateRoot>> logger,
+        IEntityRepository<TAggregateRoot> repository)
         : base(logger)
     {
         _repository = repository;
@@ -45,7 +45,7 @@ public abstract class FxEntityCommandHandler<TRequest, TResponse, TDataObject> :
         return result;
     }
 
-    protected virtual async Task<TDataObject> Add(TDataObject entity, bool commitImmediately = false)
+    protected virtual async Task<TAggregateRoot> Add(TAggregateRoot entity, bool commitImmediately = false)
     {
         if (!HasPermission())
             throw new UnauthorizedAccessException();
@@ -62,7 +62,7 @@ public abstract class FxEntityCommandHandler<TRequest, TResponse, TDataObject> :
 
     }
 
-    protected virtual async Task<TDataObject?> Update(TDataObject model, bool commitImmediately = false)
+    protected virtual async Task<TAggregateRoot?> Update(TAggregateRoot model, bool commitImmediately = false)
     {
         if (!HasPermission())
             throw new UnauthorizedAccessException();

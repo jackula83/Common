@@ -6,7 +6,7 @@ namespace Framework2.Infra.Data.Extensions
 {
     public static partial class Extensions
     {
-        public static void DetachLocal<TDataObject>(this FxDbContext context, int entityId, TDataObject entity)
+        public static void DetachLocal<TDataObject>(this FxDbContext context, int entityId, TDataObject dataObject)
            where TDataObject : class, IDataObject
         {
             var localEntity = context.Set<TDataObject>()
@@ -16,7 +16,7 @@ namespace Framework2.Infra.Data.Extensions
             if (localEntity != default)
                 context.Entry(localEntity).State = EntityState.Detached;
 
-            context.Entry(entity).State = EntityState.Modified;
+            context.Entry(dataObject).State = EntityState.Modified;
         }
     }
 }

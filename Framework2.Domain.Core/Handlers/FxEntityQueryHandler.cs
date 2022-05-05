@@ -9,7 +9,7 @@ namespace Framework2.Domain.Core.Handlers
     public abstract class FxEntityQueryHandler<TRequest, TResponse, TDataObject> : FxQueryHandler<TRequest, TResponse>
         where TRequest : FxEntityQueryRequest
         where TResponse : FxEntityQueryResponse<TDataObject>, new()
-        where TDataObject : class, IDataObject
+        where TDataObject : class, IAggregateRoot
     {
         protected readonly IEntityRepository<TDataObject> _repository;
 
