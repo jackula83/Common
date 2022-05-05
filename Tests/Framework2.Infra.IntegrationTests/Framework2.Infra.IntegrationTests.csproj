@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Framework2.Infra.MQ\Framework2.Infra.MQ.csproj" />
+    <ProjectReference Include="..\..\Framework2.Tests.Core\Framework2.Tests.Core.csproj" />
     <ProjectReference Include="..\Framework2.Domain.Tests\Framework2.Domain.UnitTests.csproj" />
   </ItemGroup>
 

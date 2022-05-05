@@ -1,10 +1,10 @@
-﻿using Framework2.Domain.Core.Data;
+﻿using Framework2.Infra.Data.Entity;
 
 namespace Framework2.Domain.Core.Requests
 {
-    public abstract class FxEntityCommandRequest<TEntity> : FxCommandRequest
-        where TEntity : FxEntity
+    public abstract class FxEntityCommandRequest<TDataObject> : FxCommandRequest
+        where TDataObject : IDataObject
     {
-        public TEntity? Item { get; set; }
+        public TDataObject? Item { get; set; }
     }
 }

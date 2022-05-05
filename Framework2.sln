@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{EC90F3F3-0970-4E47-940D-E1B648F4540A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework2.Application.Core", "Framework2.Application.Core\Framework2.Application.Core.csproj", "{E2406DBF-776E-42E9-B006-7ADC18DF56B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework2.Application", "Framework2.Application.Core\Framework2.Application.csproj", "{E2406DBF-776E-42E9-B006-7ADC18DF56B5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework2.Domain.Core", "Framework2.Domain.Core\Framework2.Domain.Core.csproj", "{2BE0EC53-B584-4C3B-AAD9-B85CF6844659}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework2.Domain", "Framework2.Domain.Core\Framework2.Domain.csproj", "{2BE0EC53-B584-4C3B-AAD9-B85CF6844659}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework2.Infra.MQ", "Framework2.Infra.MQ\Framework2.Infra.MQ.csproj", "{DA392578-9658-4D8C-8E6B-976F5710FDF8}"
 EndProject
@@ -18,6 +18,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework2.Infra.IntegrationTests", "Tests\Framework2.Infra.IntegrationTests\Framework2.Infra.IntegrationTests.csproj", "{7A9DAC82-A08A-48F0-B6BC-C9590DCF8D7F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework2.Infra.MQ.UnitTests", "Tests\Framework2.Infra.MQ.Tests\Framework2.Infra.MQ.UnitTests.csproj", "{A1705AD1-9D06-40F5-AE52-A3704E7D93A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework2.Infra.Data", "Framework2.Infra.Data\Framework2.Infra.Data.csproj", "{A14C37CC-68D6-47B2-97B0-95243B38A497}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework2.Core", "Framework2.Core\Framework2.Core.csproj", "{81F1AE07-0C5F-4DCF-8927-D4627C38C97C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework2.Infra.Data.UnitTests", "Framework2.Infra.Data.UnitTests\Framework2.Infra.Data.UnitTests.csproj", "{6E843648-BE53-4668-A8EF-B86BB45B06F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework2.Tests.Core", "Framework2.Tests.Core\Framework2.Tests.Core.csproj", "{458F5F4E-5A00-41BC-A1A1-580A0456C6BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +61,22 @@ Global
 		{A1705AD1-9D06-40F5-AE52-A3704E7D93A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1705AD1-9D06-40F5-AE52-A3704E7D93A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1705AD1-9D06-40F5-AE52-A3704E7D93A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A14C37CC-68D6-47B2-97B0-95243B38A497}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A14C37CC-68D6-47B2-97B0-95243B38A497}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A14C37CC-68D6-47B2-97B0-95243B38A497}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A14C37CC-68D6-47B2-97B0-95243B38A497}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81F1AE07-0C5F-4DCF-8927-D4627C38C97C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81F1AE07-0C5F-4DCF-8927-D4627C38C97C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81F1AE07-0C5F-4DCF-8927-D4627C38C97C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81F1AE07-0C5F-4DCF-8927-D4627C38C97C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E843648-BE53-4668-A8EF-B86BB45B06F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E843648-BE53-4668-A8EF-B86BB45B06F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E843648-BE53-4668-A8EF-B86BB45B06F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E843648-BE53-4668-A8EF-B86BB45B06F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{458F5F4E-5A00-41BC-A1A1-580A0456C6BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{458F5F4E-5A00-41BC-A1A1-580A0456C6BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{458F5F4E-5A00-41BC-A1A1-580A0456C6BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{458F5F4E-5A00-41BC-A1A1-580A0456C6BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +86,8 @@ Global
 		{3A72F5F6-6D6E-49C4-990C-BE52A2111DE1} = {EC90F3F3-0970-4E47-940D-E1B648F4540A}
 		{7A9DAC82-A08A-48F0-B6BC-C9590DCF8D7F} = {EC90F3F3-0970-4E47-940D-E1B648F4540A}
 		{A1705AD1-9D06-40F5-AE52-A3704E7D93A1} = {EC90F3F3-0970-4E47-940D-E1B648F4540A}
+		{6E843648-BE53-4668-A8EF-B86BB45B06F1} = {EC90F3F3-0970-4E47-940D-E1B648F4540A}
+		{458F5F4E-5A00-41BC-A1A1-580A0456C6BE} = {EC90F3F3-0970-4E47-940D-E1B648F4540A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E649EE29-2815-406D-88CF-1A5DC8E593E5}

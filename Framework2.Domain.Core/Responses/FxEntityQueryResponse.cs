@@ -1,14 +1,14 @@
-﻿using Framework2.Domain.Core.Data;
+﻿using Framework2.Infra.Data.Entity;
 
 namespace Framework2.Domain.Core.Responses
 {
     public abstract class FxEntityQueryResponse : FxQueryResponse { }
 
-    public abstract class FxEntityQueryResponse<TEntity> : FxEntityQueryResponse
-        where TEntity : FxEntity
+    public abstract class FxEntityQueryResponse<TAggregateRoot> : FxEntityQueryResponse
+        where TAggregateRoot : class, IAggregateRoot
     {
-        public List<TEntity> Items { get; set; } = new();
+        public List<TAggregateRoot> Items { get; set; } = new();
 
-        public TEntity? Item => Items?.FirstOrDefault();
+        public TAggregateRoot? Item => Items?.FirstOrDefault();
     }
 }

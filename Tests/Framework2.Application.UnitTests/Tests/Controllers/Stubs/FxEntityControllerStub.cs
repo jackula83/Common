@@ -1,5 +1,6 @@
 ﻿using Framework2.Application.Core.Controllers;
 using Framework2.Domain.UnitTests.Models.Stubs;
+using Framework2.Infra.Data.UnitTests.Tests.Models.Stubs;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
