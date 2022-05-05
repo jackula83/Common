@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Framework2.Infra.MQ\Framework2.Infra.MQ.csproj" />
+    <ProjectReference Include="..\..\src\Framework2.Infra.MQ\Framework2.Infra.MQ.csproj" />
     <ProjectReference Include="..\Framework2.Domain.Tests\Framework2.Domain.UnitTests.csproj" />
   </ItemGroup>
 

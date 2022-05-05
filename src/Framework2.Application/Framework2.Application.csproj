@@ -12,8 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Framework2.Domain.Core\Framework2.Domain.csproj" />
-    <ProjectReference Include="..\Framework2.Infra.Data\Framework2.Infra.Data.csproj" />
+    <ProjectReference Include="..\Framework2.Domain\Framework2.Domain.csproj" />
   </ItemGroup>
 
 </Project>
