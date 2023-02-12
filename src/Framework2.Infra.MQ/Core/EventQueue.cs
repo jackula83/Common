@@ -22,14 +22,14 @@ namespace Framework2.Infra.MQ.Core
         protected abstract Task StartConsumingEvents<TEvent>(string eventName)
             where TEvent : FxEvent;
 
+        public abstract Task Publish<TEvent>(TEvent @event)
+            where TEvent : FxEvent;
+
         public EventQueue(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             _eventHandlers = new();
         }
-
-        public abstract Task Publish<TEvent>(TEvent @event)
-            where TEvent : FxEvent;
 
         public virtual async Task Subscribe<TEvent, TEventHandler>()
             where TEvent : FxEvent

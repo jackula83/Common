@@ -32,11 +32,11 @@ namespace Framework2.Infra.MQ.RabbitMQ
 
             QueueDeclare(channel, @event.Name);
 
-            var payload = JsonConvert.SerializeObject(@event);
-            var body = Encoding.UTF8.GetBytes(payload);
+            var payloadJson = JsonConvert.SerializeObject(@event);
+            var content = Encoding.UTF8.GetBytes(payloadJson);
 
             // publish to rabbitmq
-            channel.BasicPublish(DefaultExchange, @event.Name, default, body);
+            channel.BasicPublish(DefaultExchange, @event.Name, default, content);
         }
 
         public override async Task<uint> Count<TEvent>()
