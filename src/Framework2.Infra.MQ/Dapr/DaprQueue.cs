@@ -6,26 +6,21 @@ using System.Text;
 
 namespace Framework2.Infra.MQ.Dapr
 {
-    public class DaprQueue : EventQueue, IEventQueue
+    public class DaprQueue
     {
         private readonly HttpClient _httpClient;
         private readonly DaprConfig _config;
 
-        public DaprQueue(IServiceProvider provider, HttpClient httpClient, DaprConfig config)
-            : base(provider)
+        public DaprQueue(DaprConfig config)
         {
-            _httpClient = httpClient;
+            _httpClient = new HttpClient();
             _httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
             _config = config;
         }
 
-        public override Task<uint> Count<TEvent>()
-        {
-            throw new NotSupportedException("Dapr does not support the count operation");
-        }
-
-        public override async Task Publish<TEvent>(TEvent @event)
+        public async Task Publish<TEvent>(TEvent @event)
+            where TEvent : FxEvent
         {
             var payloadJson = JsonConvert.SerializeObject(@event);
             var content = new StringContent(payloadJson, Encoding.UTF8, MediaTypeNames.Application.Json);
@@ -35,11 +30,6 @@ namespace Framework2.Infra.MQ.Dapr
                 content);
 
             await Task.CompletedTask;
-        }
-
-        protected override Task StartConsumingEvents<TEvent>(string eventName)
-        {
-            throw new NotImplementedException();
         }
     }
 }
