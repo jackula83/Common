@@ -1,9 +1,7 @@
 ﻿namespace Framework2.Infra.MQ.Core
 {
-    public interface IEventQueue
+    public interface IEventQueue : IPublishQueue
     {
-        Task Publish<TEvent>(TEvent @event)
-            where TEvent : FxEvent;
         Task Subscribe<TEvent, TEventHandler>()
             where TEvent : FxEvent
             where TEventHandler : FxEventHandler<TEvent>;
