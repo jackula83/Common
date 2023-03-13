@@ -1,6 +1,7 @@
 ﻿using Framework2.Infra.Data.UnitTests.Tests.Data.Stubs;
 using Framework2.Infra.Data.UnitTests.Tests.Models.Stubs;
 using Framework2.Infra.Data.UnitTests.Utilities;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -97,6 +98,23 @@ namespace Framework2.Infra.Data.UnitTests.Tests.Data
             Assert.True(dbEntityAfterUpdate.UpdatedAt > dbEntityAfterUpdate.CreatedAt);
             Assert.Equal(dbEntityBeforeUpdate.CreatedAt, dbEntityAfterUpdate.CreatedAt);
             Assert.True(_context.ChangeTracker.HasChanges());
+        }
+
+        [Fact]
+        public void Work_SentTwoJobs_CompletesSequentially()
+        {
+            // arrange
+            var job1 = new Func<Task<EntityStub>>(async () => await _instance.Repository.Add(new EntityStub()));
+            var job2 = new Func<Task<EntityStub>>(async () => await _instance.Repository.Add(new EntityStub()));
+
+            // act
+            var task1 = _instance.Work(job1);
+            var task2 = _instance.Work(job2);
+            Task.WaitAll(task1, task2);
+
+            // assert
+            Assert.Equal(1, task1.Result.Id);
+            Assert.Equal(2, task2.Result.Id);
         }
     }
 }
