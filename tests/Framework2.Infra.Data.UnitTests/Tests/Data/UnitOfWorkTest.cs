@@ -1,7 +1,8 @@
 ﻿using Framework2.Infra.Data.UnitTests.Tests.Data.Stubs;
 using Framework2.Infra.Data.UnitTests.Tests.Models.Stubs;
 using Framework2.Infra.Data.UnitTests.Utilities;
-using System;
+using MediatR;
+using Moq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -12,10 +13,12 @@ namespace Framework2.Infra.Data.UnitTests.Tests.Data
     {
         private readonly UnitOfWorkStub _instance;
         private readonly SqlServerDbContextStub _context;
+        private readonly Mock<IMediator> _mediatorMock;
 
         public UnitOfWorkStubTest()
         {
-            _context = Utils.CreateInMemoryDatabase<SqlServerDbContextStub>(nameof(UnitOfWorkStubTest))!;
+            _mediatorMock = new();
+            _context = Utils.CreateInMemoryDatabase<SqlServerDbContextStub>(nameof(UnitOfWorkStubTest), _mediatorMock.Object)!;
             _instance = new(_context);
         }
 

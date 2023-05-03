@@ -1,6 +1,8 @@
 ﻿using Framework2.Infra.Data.UnitTests.Tests.Data.Stubs;
 using Framework2.Infra.Data.UnitTests.Tests.Models.Stubs;
 using Framework2.Infra.Data.UnitTests.Utilities;
+using MediatR;
+using Moq;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,10 +15,12 @@ namespace Framework2.Infra.Data.UnitTests.Tests.Data
     {
         private readonly EntityRepositoryStub _repository;
         private readonly SqlServerDbContextStub _context;
+        private readonly Mock<IMediator> _mediatorMock;
 
         public EntityRepositoryTest()
         {
-            _context = Utils.CreateInMemoryDatabase<SqlServerDbContextStub>(nameof(EntityRepositoryTest))!;
+            _mediatorMock = new();
+            _context = Utils.CreateInMemoryDatabase<SqlServerDbContextStub>(nameof(EntityRepositoryTest), _mediatorMock.Object)!;
             _repository = new(_context);
         }
 
