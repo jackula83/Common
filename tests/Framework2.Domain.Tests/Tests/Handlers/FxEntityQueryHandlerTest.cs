@@ -2,8 +2,10 @@
 using Framework2.Infra.Data.UnitTests.Tests.Data.Stubs;
 using Framework2.Infra.Data.UnitTests.Tests.Models.Stubs;
 using Framework2.Infra.Data.UnitTests.Utilities;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Moq;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -16,11 +18,13 @@ namespace Framework2.Domain.UnitTests.Handlers
         private readonly SqlServerDbContextStub _context;
         private readonly EntityRepositoryStub _repository;
         private readonly ILogger<EntityQueryHandlerStub> _logger;
+        private readonly Mock<IMediator> _mediatorMock;
 
         public FxEntityQueryHandlerTest()
         {
+            _mediatorMock = new();
             _logger = new NullLogger<EntityQueryHandlerStub>();
-            _context = Utils.CreateInMemoryDatabase<SqlServerDbContextStub>(nameof(FxEntityQueryHandlerTest))!;
+            _context = Utils.CreateInMemoryDatabase<SqlServerDbContextStub>(nameof(FxEntityQueryHandlerTest), _mediatorMock.Object)!;
             _repository = new(_context);
             _target = new(_logger, _repository);
         }

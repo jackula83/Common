@@ -1,18 +1,19 @@
 ﻿using MediatR;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Framework2.Infra.Data.Entity
 {
     public abstract class FxAggregateRoot : FxDataObject
     {
-        private readonly IMediator _mediator;
+        private List<FxDomainEvent> _domainEvents = new();
 
-        public FxAggregateRoot(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        [NotMapped]
+        public IReadOnlyCollection<FxDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
-        protected void Apply<TEvent>(TEvent @event, CancellationToken cancellationToken = default)
-            where TEvent : FxDomainEvent, INotification
-            => _mediator.Publish(@event, cancellationToken);
+        public void AddDomainEvent<TDomainEvent>(TDomainEvent domainEvent) where TDomainEvent : FxDomainEvent
+            => _domainEvents.Add(domainEvent);
+
+        public void ClearDomainEvents()
+            => _domainEvents.Clear();
     }
 }

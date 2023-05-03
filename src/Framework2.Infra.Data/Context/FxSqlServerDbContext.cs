@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Framework2.Infra.Data.Context
 {
@@ -7,7 +8,7 @@ namespace Framework2.Infra.Data.Context
     /// </summary>
     public abstract class FxSqlServerDbContext : FxDbContext
     {
-        protected FxSqlServerDbContext(DbContextOptions options) : base(options)
+        protected FxSqlServerDbContext(DbContextOptions options, IMediator mediator) : base(options, mediator)
         {
         }
 
