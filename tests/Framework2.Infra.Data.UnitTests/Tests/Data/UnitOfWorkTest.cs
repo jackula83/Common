@@ -3,6 +3,7 @@ using Framework2.Infra.Data.UnitTests.Tests.Models.Stubs;
 using Framework2.Infra.Data.UnitTests.Utilities;
 using MediatR;
 using Moq;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
