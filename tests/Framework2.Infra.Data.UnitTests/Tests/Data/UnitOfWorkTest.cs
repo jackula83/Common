@@ -102,5 +102,22 @@ namespace Framework2.Infra.Data.UnitTests.Tests.Data
             Assert.Equal(dbEntityBeforeUpdate.CreatedAt, dbEntityAfterUpdate.CreatedAt);
             Assert.True(_context.ChangeTracker.HasChanges());
         }
+
+        [Fact]
+        public void Work_SentTwoJobs_CompletesSequentially()
+        {
+            // arrange
+            var job1 = new Func<Task<EntityStub>>(async () => await _instance.Repository.Add(new EntityStub()));
+            var job2 = new Func<Task<EntityStub>>(async () => await _instance.Repository.Add(new EntityStub()));
+
+            // act
+            var task1 = _instance.Work(job1);
+            var task2 = _instance.Work(job2);
+            Task.WaitAll(task1, task2);
+
+            // assert
+            Assert.Equal(1, task1.Result.Id);
+            Assert.Equal(2, task2.Result.Id);
+        }
     }
 }
