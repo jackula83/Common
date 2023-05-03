@@ -4,9 +4,9 @@ namespace Framework2.Infra.Data.Entity
 {
     public abstract class FxAggregateRoot : FxDataObject
     {
-        private readonly Mediator _mediator;
+        private readonly IMediator _mediator;
 
-        public FxAggregateRoot(Mediator mediator)
+        public FxAggregateRoot(IMediator mediator)
         {
             _mediator = mediator;
         }
